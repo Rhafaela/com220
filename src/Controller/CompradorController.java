@@ -1,4 +1,5 @@
 /*
+teste commit
  */
 package Controller;
 
@@ -90,8 +91,8 @@ public class CompradorController {
             // Write objects to file
             o.writeObject(c1);
 
-            o.flush();
             o.close();
+            f.close();
 
 //            FileInputStream fi = new FileInputStream(new File(nomeDoArquivo));
 //            ObjectInputStream oi = new ObjectInputStream(fi);
