@@ -1,23 +1,27 @@
-
 package Model;
 
 public class Corretor extends Pessoa{
-    private String creci;
-    private double percCorretagem;    
     
-    public Corretor(String cpf, String nome, String email, String fone,
-                    String creci, double percCorretagem) {
+    private String creci;
+    private double percCorretagem;
+          
+    public Corretor(String creci, double percCorretagem, String cpf, String nome, String email, String fone) {
         super(cpf, nome, email, fone);
         this.creci = creci;
         this.percCorretagem = percCorretagem;
+   }
+       
+    public void setPercCorretagem(double percCorretagem) {
+        this.percCorretagem = percCorretagem;
     }
-
-    public String getCreci() {
-        return creci;
+    public void setCreci(String creci) {
+        this.creci = creci;
     }
 
     public double getPercCorretagem() {
         return percCorretagem;
-    }    
-    
+    }
+    public String getCreci() {
+        return creci;
+    }
 }
