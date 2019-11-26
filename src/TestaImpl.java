@@ -4,7 +4,10 @@ import View.MenuPrincipal;
 import java.util.*;
 
 public class TestaImpl {
-
+    
+  /*  NAO DESCOMENTAR ESSE CODIGO EM HIPOTESE NENHUMA  
+    
+    
     public static void main(String[] args) {
         ArrayList<Imovel> listaImoveis = new ArrayList();
         
@@ -115,5 +118,5 @@ public class TestaImpl {
             }
 
         }
-    }
+    }   */
 }

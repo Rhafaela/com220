@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CompradorController {
     
-    static final String nomeDoArquivo = "compradores.txt";
+    static final String nomeDoArquivo = "compradores.dat";
     CompradorSer c1;
     private ArrayList<CompradorSer> comprArr;
     
@@ -83,15 +83,15 @@ public class CompradorController {
 //            throw new Exception("Arquivo Compradores não encontrado!");
 //        }
 
-        try {
+            try {
             FileOutputStream f = new FileOutputStream(new File(nomeDoArquivo));
             ObjectOutputStream o = new ObjectOutputStream(f);
 
             // Write objects to file
             o.writeObject(c1);
 
+            o.flush();
             o.close();
-            f.close();
 
 //            FileInputStream fi = new FileInputStream(new File(nomeDoArquivo));
 //            ObjectInputStream oi = new ObjectInputStream(fi);
