@@ -2,6 +2,7 @@
 package View;
 
 import Controller.ControlCorretor;
+import Controller.CtrlImovel;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,6 +25,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     Dimension tamTela = kit.getScreenSize();  
     
     private ControlCorretor ctrlCorretor;
+    private CtrlImovel ctrleImovel;
     
     
     //METODO CONSTRUTOR
@@ -36,7 +38,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         int alt = tamTela.height;
         
         ctrlCorretor = new ControlCorretor();
-        
+        ctrleImovel = new CtrlImovel();
         
         /*------- MENU -------------*/
         JMenuBar menu = new JMenuBar();
@@ -116,7 +118,18 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             }
         });
         
-        
+        //Acao no menu para cadastrar imovel
+        cadImovel.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ImovelAdd im = new ImovelAdd(ctrleImovel);
+                im.setVisible(true);
+                im.setSize(larg/2, 480);
+                im.setLocationRelativeTo(null);
+                im.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+                    
+        });
         
         
         //Setando o JFrame

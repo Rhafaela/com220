@@ -11,13 +11,14 @@ public class Imovel {
     private String estado;
     private double preco;
     private double comissao;
-    private Calendar dataInclusao;
-    private Vendedor vendedor;
+    //private Calendar dataInclusao;
+    //private Vendedor vendedor;
+    private String dataInclusao;
+    private String vendedor;
     private ArrayList<Visita> listaVisitas = new ArrayList();
     private ArrayList<Proposta> listaPropostas = new ArrayList();
 
-    public Imovel(int codigo, String tipo, String descricao, String arquivoFoto,
-            double preco, double comissao, Calendar dataInclusao, Vendedor vendedor) {
+    public Imovel(int codigo, String tipo, String descricao, String arquivoFoto, String estado, double preco, double comissao, String vendedor) {
         this.codigo = codigo;
         this.tipo = tipo;
         this.descricao = descricao;
@@ -108,11 +109,11 @@ public class Imovel {
         return comissao;
     }
 
-    public Calendar getDataInclusao() {
+    public String getDataInclusao() {
         return dataInclusao;
     }
 
-    public Vendedor getVendedor() {
+    public String getVendedor() {
         return vendedor;
     }
 
