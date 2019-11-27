@@ -19,10 +19,10 @@ public class ControlCorretor {
         desserializeCorretor();
     }
     
-    public boolean cadCorretor(){
+    public boolean cadCorretor(String cpf, String nome, String email, String fone, String creci, Double percentual){
         //inserindo um corretor vazio e setando seuda dos posteriormente
-        cadastra();
-        //objACorretorEntidade = new Corretor(dadosForm[4], Double.parseDouble(dadosForm[5]), dadosForm[0], dadosForm[1], dadosForm[2], dadosForm[3]);
+        //cadastra();
+        objACorretorEntidade = new Corretor(creci, percentual, cpf, nome, email, fone);
         
 //        objACorretorEntidade.setNome(dadosForm[0]);
 //        objACorretorEntidade.setCpf(dadosForm[1]);
@@ -50,7 +50,7 @@ public class ControlCorretor {
         vecACorretor.add(pcorretor);
     }
     
-    private void serializaDisciplina() throws Exception {
+    private void serializaCorretor() throws Exception {
         FileOutputStream objFileOS = new FileOutputStream("corretores.dat");
         ObjectOutputStream objOS = new ObjectOutputStream(objFileOS);
         objOS.writeObject(vecACorretor);
@@ -82,6 +82,6 @@ public class ControlCorretor {
     }
     
      public void finalize() throws Exception {
-        serializaDisciplina();
+        serializaCorretor();
     }
 }
