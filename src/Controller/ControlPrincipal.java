@@ -3,6 +3,7 @@ package Controller;
 import View.CompradorView;
 import View.CorretorView;
 import View.MainView;
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.String;
 import javax.swing.JOptionPane;
 
 public class ControlPrincipal {
@@ -51,7 +52,8 @@ public class ControlPrincipal {
     }
     
     private boolean cadCorretor(){
-        return objAControlCorretor.cadCorretor();
+        return false;
+        //return objAControlCorretor.cadCorretor(String cpf, String nome, String email, String fone, String creci, Double percentual);
     }
         
     private boolean listaCorretor(){
