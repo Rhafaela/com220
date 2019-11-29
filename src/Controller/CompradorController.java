@@ -4,6 +4,7 @@ teste commit
 package Controller;
 
 import Model.CompradorSer;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,13 +22,20 @@ import java.util.List;
  */
 public class CompradorController {
     
-    static final String nomeDoArquivo = "compradores.dat";
-    CompradorSer c1;
+    String nomeDoArquivo = "compradores.dat";
+    CompradorSer c1 = new CompradorSer("", "", "", "", "");
     private ArrayList<CompradorSer> comprArr;
     
     public CompradorController(){
-        comprArr = new ArrayList<CompradorSer>();
+        this.comprArr = new ArrayList<CompradorSer>();
         //c1 = new CompradorSer();
+        try {
+            this.lerDoArquivo();
+            int a = 0;
+        } catch (Exception e) {
+            // could not read file
+            System.out.println("Could not read compradores.dat");
+        }
     }
     
     public CompradorSer addComprador(CompradorSer comParam){
@@ -54,16 +62,9 @@ public class CompradorController {
         return c1;
     }
     
-    public List<CompradorSer> consultaCompradores(){
-        comprArr.clear();
-        this.lerDoArquivo();
-        // lerDoArquivo escreve na variavel comprArr
-        return comprArr;
-    }
-    
     public CompradorSer consultaComprador(){
         comprArr.clear();
-        this.lerDoArquivo();
+//        this.lerDoArquivo();
         
         return null;
     }
@@ -115,35 +116,23 @@ public class CompradorController {
         return;
     }
     
-    public void lerDoArquivo(){
-//        try {
-//            FileInputStream arquivo = new FileInputStream(nomeDoArquivo);
-//            ObjectInputStream in = new ObjectInputStream(arquivo);
-//            String res = in.readObject().toString();
-////            comprArr = (ArrayList<CompradorSer>) in.readObject();
-//            in.close();
-//        } catch (Exception ex) {
-//            comprArr.clear();
-//        }
-        
-        try {
-            FileInputStream fi = new FileInputStream(new File(nomeDoArquivo));
-            ObjectInputStream oi = new ObjectInputStream(fi);
-
-            // Read objects
-            CompradorSer pr1 = (CompradorSer) oi.readObject();
-
-            System.out.println(pr1.toString());
-
-            oi.close();
-            fi.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Error initializing stream");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+    public void lerDoArquivo() throws Exception {
+        // le do arquivo os compradores
+        File objFile = new File(this.nomeDoArquivo);
+        if (objFile.exists()) {
+            FileInputStream objFileIS = new FileInputStream(this.nomeDoArquivo);
+            ObjectInputStream objIS = new ObjectInputStream(objFileIS);
+            for (;;) {
+                try {
+                    this.c1 = (CompradorSer) objIS.readObject();
+                    this.comprArr.add(this.c1);
+                }
+                catch (EOFException exc) {
+                    break;
+                }
+            }
+//            this.comprArr = (ArrayList) objIS.readObject();
+            objIS.close();
         }
     }
     

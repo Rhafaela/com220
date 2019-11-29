@@ -79,6 +79,11 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         catalogo.setPreferredSize(new java.awt.Dimension(larg/3, alt/3));
         catalogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/page_white_picture.png")));
         menu.add(catalogo);
+        
+        JMenuItem listaComprador = new JMenuItem("Compradores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        listaComprador.setBorder(null);
+        
+        catalogo.add(listaComprador);
         /*Fim Menu de Catalogo*/
 
         
@@ -129,6 +134,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 im.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
                     
+        });
+        
+        listaComprador.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               CompradorList cl = new CompradorList();
+               cl.setVisible(true);
+               cl.setSize(larg/2, alt/2);
+               cl.setLocationRelativeTo(null);
+               cl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
         });
         
         
