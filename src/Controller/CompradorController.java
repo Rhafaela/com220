@@ -53,8 +53,23 @@ public class CompradorController {
     }
     
     public List<Comprador> getCompradores(){
-        // busca no array por um comprador por CPF.
+        //
         return this.comprArr;
+    }
+    
+    public String[] getCompradoresStringList(){
+        String[] lst = new String[this.comprArr.size()];
+        int i = 0;
+        for (i = 0; i < this.comprArr.size(); i++){
+            lst[i] = this.returnCompradorStr(this.comprArr.get(i));
+        }
+        return lst;
+    }
+    
+    public String returnCompradorStr(Comprador pCom){
+        String res = "";
+        res = pCom.getCpf() + "\t" + pCom.getNome() + "\t" + pCom.getFone() + "\n";
+        return res;
     }
     
     public void removeComprador(){
