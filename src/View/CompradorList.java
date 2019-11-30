@@ -9,6 +9,7 @@ import Controller.CompradorController;
 import Model.Comprador;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -116,14 +117,11 @@ public class CompradorList extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        try {
-            this.comprCtrl.removeComprador(sel);
-            JOptionPane.showMessageDialog(this, "Editado com sucesso","Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            this.refreshVars();
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        CompradorEdit ce = new CompradorEdit(sel);
+        ce.setVisible(true);
+//        ce.setSize(larg/2, alt/2);
+//        ce.setLocationRelativeTo(null);
+        ce.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed

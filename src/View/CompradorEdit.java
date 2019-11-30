@@ -6,6 +6,7 @@
 package View;
 
 import Controller.CompradorController;
+import Model.Comprador;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,13 +16,23 @@ import javax.swing.JOptionPane;
 public class CompradorEdit extends javax.swing.JFrame {
     
     private CompradorController compCtrl;
+    private int index;
 
     /**
      * Creates new form CompradorEdit
      */
-    public CompradorEdit() {
+    public CompradorEdit(int pIndex) {
         this.compCtrl = new CompradorController();
+        this.index = pIndex;
+        Comprador tmp01 = this.compCtrl.getCompradorByIndex(pIndex);
         initComponents();
+        
+        // preset vars
+        jTextFieldCpf.setText(tmp01.getCpf());
+        jTextFieldNome.setText(tmp01.getNome());
+        jTextFieldEmail.setText(tmp01.getEmail());
+        jTextFieldFone.setText(tmp01.getFone());
+//        jComboBox1.getSelectedItem().toString();
     }
 
     /**
@@ -174,9 +185,11 @@ public class CompradorEdit extends javax.swing.JFrame {
         email = jTextFieldEmail.getText();
         fone = jTextFieldFone.getText();
         contatoPref = jComboBox1.getSelectedItem().toString();
+        
+        Comprador tmp = new Comprador(cpf, nome, email, fone, contatoPref);
 
         try{
-            this.compCtrl.addComprador(cpf, nome, email, fone, contatoPref);
+            this.compCtrl.editaComprador(index, tmp);
             JOptionPane.showMessageDialog(this, "Edição feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } catch (Exception e) {

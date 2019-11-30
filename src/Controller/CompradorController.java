@@ -52,6 +52,10 @@ public class CompradorController {
         return c1;
     }
     
+    public Comprador getCompradorByIndex(int pIndex){
+        return this.comprArr.get(pIndex);
+    }
+    
     public List<Comprador> getCompradores(){
         //
         return this.comprArr;
@@ -84,8 +88,9 @@ public class CompradorController {
     }
     
     public void editaComprador(int index, Comprador pComp) throws Exception {
-        this.comprArr.remove(index);
-        this.comprArr.add(pComp);
+//        this.comprArr.remove(index);
+        this.comprArr.set(index, pComp);
+//        this.comprArr.add(pComp);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
