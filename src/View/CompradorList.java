@@ -28,7 +28,7 @@ public class CompradorList extends javax.swing.JFrame {
         this.comprCtrl = new CompradorController();
         this.comprLst = new ArrayList<CompradorSer>();
         // get the list from CompradorController
-        this.comprLst = this.comprCtrl.consultaCompradores();
+//        this.comprLst = this.comprCtrl.consultaCompradores();
         int a = 0;
     }
 

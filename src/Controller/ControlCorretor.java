@@ -22,6 +22,8 @@ public class ControlCorretor {
     public boolean cadCorretor(String cpf, String nome, String email, String fone, String creci, Double percentual){
         //inserindo um corretor vazio e setando seuda dos posteriormente
         //cadastra();
+        
+        //Criando Objeto
         objACorretorEntidade = new Corretor(creci, percentual, cpf, nome, email, fone);
         
 //        objACorretorEntidade.setNome(dadosForm[0]);
@@ -31,10 +33,10 @@ public class ControlCorretor {
 //        objACorretorEntidade.setCreci(dadosForm[4]);
 //        objACorretorEntidade.setPercCorretagem(Double.parseDouble(dadosForm[5]));
         
-//        addVetor(objACorretorEntidade);
+        addVetor(objACorretorEntidade);
         
         try {
-            salvaCorretor();
+            serializaCorretor();
         } catch (Exception e) {
              JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -42,9 +44,9 @@ public class ControlCorretor {
     
     }
     
-    private void cadastra(){
-        dadosForm = objACorretorLimite.form();
-    }
+//    private void cadastra(){
+//        dadosForm = objACorretorLimite.form();
+//    }
     
     public void addVetor(Corretor pcorretor){
         vecACorretor.add(pcorretor);
@@ -52,36 +54,45 @@ public class ControlCorretor {
     
     private void serializaCorretor() throws Exception {
         FileOutputStream objFileOS = new FileOutputStream("corretores.dat");
-        ObjectOutputStream objOS = new ObjectOutputStream(objFileOS);
-        objOS.writeObject(vecACorretor);
-        objOS.flush();
-        objOS.close();
+        try (ObjectOutputStream objOS = new ObjectOutputStream(objFileOS)) {
+            objOS.writeObject(vecACorretor);
+            objOS.flush();
+            objOS.close();
+        }
     }
-     
-    private void desserializeCorretor() throws Exception {
+       
+     public String listaCorretores() throws Exception{
+        String vet = "";
+        vecACorretor = getListaCorretores();
+        vet = "Código" + "t \t \t \t \t \t \t \t" + "Nome\n";
+                
+        for(int i =0; i < vecACorretor.size();i++){
+            vet += vecACorretor.get(i).getCreci()+ "\t \t \t \t \t \t \t \t" + vecACorretor.get(i).getNome() +"\n";
+            
+        }
+  
+        return vet;
+        
+    }
+    
+    private ArrayList desserializeCorretor() throws Exception {        
         File objFile = new File("corretores.dat");
         if (objFile.exists()) {
             FileInputStream objFileIS = new FileInputStream("corretores.dat");
-            ObjectInputStream objIS = new ObjectInputStream(objFileIS);
-            vecACorretor = (ArrayList) objIS.readObject();
-            objIS.close();
+            try (ObjectInputStream objIS = new ObjectInputStream(objFileIS)) {
+                vecACorretor = (ArrayList<Corretor>) objIS.readObject();
+                objIS.close();
+            }
         }
-    }
-    
-    public  ArrayList getListaCorretores(){
         return vecACorretor;
     }
     
-    
-     public void salvaCorretor() throws Exception {
-        FileOutputStream objFileOS = new FileOutputStream("corretores.dat");
-        ObjectOutputStream objOS = new ObjectOutputStream(objFileOS);
-        objOS.writeObject(vecACorretor);
-        objOS.flush();
-        objOS.close();
+    public  ArrayList getListaCorretores() throws Exception{
+        vecACorretor = desserializeCorretor();
+        return vecACorretor;
     }
-    
+                   
      public void finalize() throws Exception {
-        serializaCorretor();
+//        serializaCorretor();
     }
 }

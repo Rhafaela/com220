@@ -4,7 +4,7 @@ package View;
 import javax.swing.*;
 
 public class CorretorView {
-    
+
    public String[] form(){
        String dadosForm[] = new String[6];
        
