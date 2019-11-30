@@ -122,6 +122,7 @@ public class CompradorList extends javax.swing.JFrame {
 //        ce.setSize(larg/2, alt/2);
 //        ce.setLocationRelativeTo(null);
         ce.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
