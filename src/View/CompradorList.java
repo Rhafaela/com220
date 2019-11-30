@@ -110,12 +110,23 @@ public class CompradorList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        
+        int sel = -1;
+        sel = this.jList1.getSelectedIndex();
+        if (sel == -1){
+            JOptionPane.showMessageDialog(this, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        try {
+            this.comprCtrl.removeComprador(sel);
+            JOptionPane.showMessageDialog(this, "Editado com sucesso","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.refreshVars();
+        } catch (Exception e){
+            JOptionPane.showMessageDialog(this, e.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         int sel = -1;
         sel = this.jList1.getSelectedIndex();
         if (sel == -1){

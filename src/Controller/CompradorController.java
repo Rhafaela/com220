@@ -83,6 +83,17 @@ public class CompradorController {
         }
     }
     
+    public void editaComprador(int index, Comprador pComp) throws Exception {
+        this.comprArr.remove(index);
+        this.comprArr.add(pComp);
+        try {
+            this.salvarNoArquivo();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("Erro ao editar.");
+        }
+    }
+    
     public void salvarNoArquivo() throws Exception {
         try {
             FileOutputStream f = new FileOutputStream(new File(nomeDoArquivo));
