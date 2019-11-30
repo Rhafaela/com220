@@ -3,7 +3,7 @@ package View;
 
 import Controller.ControlCorretor;
 import Controller.CtrlImovel;
-//import com.sun.prism.image.Coords;
+import com.sun.prism.image.Coords;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
