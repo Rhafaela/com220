@@ -1,7 +1,8 @@
 package Model;
 
-public class Corretor extends Pessoa{
-    
+import java.io.Serializable;
+
+public class Corretor extends Pessoa implements Serializable{
     private String creci;
     private double percCorretagem;
           
