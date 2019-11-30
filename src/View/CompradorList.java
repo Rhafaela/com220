@@ -6,7 +6,7 @@
 package View;
 
 import Controller.CompradorController;
-import Model.CompradorSer;
+import Model.Comprador;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +16,19 @@ import java.util.List;
  */
 public class CompradorList extends javax.swing.JFrame {
     
-    List<CompradorSer> comprLst;
+    List<Comprador> comprLst;
     CompradorController comprCtrl;
 
     /**
      * Creates new form CompradorList
      */
     public CompradorList() {
-        initComponents();
-        //
         this.comprCtrl = new CompradorController();
-        this.comprLst = new ArrayList<CompradorSer>();
+        this.comprLst = new ArrayList<Comprador>();
         // get the list from CompradorController
-//        this.comprLst = this.comprCtrl.consultaCompradores();
+        this.comprLst = this.comprCtrl.getCompradores();
+        //
+        jList1.clearSelection();
         int a = 0;
     }
 

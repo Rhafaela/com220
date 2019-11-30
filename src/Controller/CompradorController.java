@@ -3,7 +3,7 @@ teste commit
  */
 package Controller;
 
-import Model.CompradorSer;
+import Model.Comprador;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,12 +23,12 @@ import java.util.List;
 public class CompradorController {
     
     String nomeDoArquivo = "compradores.dat";
-    CompradorSer c1 = new CompradorSer("", "", "", "", "");
-    private ArrayList<CompradorSer> comprArr;
+    Comprador c1 = new Comprador("", "", "", "", "");
+    private ArrayList<Comprador> comprArr;
     
     public CompradorController(){
-        this.comprArr = new ArrayList<CompradorSer>();
-        //c1 = new CompradorSer();
+        this.comprArr = new ArrayList<Comprador>();
+        //c1 = new Comprador();
         try {
             this.lerDoArquivo();
             int a = 0;
@@ -38,35 +38,23 @@ public class CompradorController {
         }
     }
     
-    public CompradorSer addComprador(CompradorSer comParam){
-        c1 = new CompradorSer(c1.getCpf(), c1.getNome(),
-            c1.getEmail(), c1.getFone(), c1.getContatoPref());
-        try {
-            this.salvarNoArquivo();
-        } catch (Exception e) {
-            System.out.println("\nNão pode salvar no arquivo\n");
-        }
-        
-        return c1;
-    }
-    
-    public CompradorSer addComprador(String pCpf, String pNome, 
-            String pEmail, String pFone, String pContatoPref){
-        c1 = new CompradorSer(pCpf, pNome, pEmail, pFone, pContatoPref);
+    public Comprador addComprador(String pCpf, String pNome, 
+            String pEmail, String pFone, String pContatoPref) throws Exception {
+        c1 = new Comprador(pCpf, pNome, pEmail, pFone, pContatoPref);
         comprArr.add(c1);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
             System.out.println("\nNão pode salvar no arquivo\n");
+            System.out.println(e.getMessage() + "\n");
+            throw new Exception("Erro ao salvar.");
         }
         return c1;
     }
     
-    public CompradorSer consultaComprador(){
-        comprArr.clear();
-//        this.lerDoArquivo();
-        
-        return null;
+    public List<Comprador> getCompradores(){
+        // busca no array por um comprador por CPF.
+        return this.comprArr;
     }
     
     public void removeComprador(){
@@ -74,38 +62,15 @@ public class CompradorController {
     }
     
     public void salvarNoArquivo() throws Exception {
-//        try {
-//            FileOutputStream arquivo = new FileOutputStream(nomeDoArquivo);
-//            ObjectOutputStream out = new ObjectOutputStream(arquivo);
-//            out.writeObject(c1);
-//            out.flush();
-//            out.close();
-//            arquivo.close();
-//        } catch (Exception exc) {
-//            throw new Exception("Arquivo Compradores não encontrado!");
-//        }
-
-            try {
+        try {
             FileOutputStream f = new FileOutputStream(new File(nomeDoArquivo));
             ObjectOutputStream o = new ObjectOutputStream(f);
 
             // Write objects to file
-            o.writeObject(c1);
+            o.writeObject(this.comprArr);
 
             o.close();
             f.close();
-
-//            FileInputStream fi = new FileInputStream(new File(nomeDoArquivo));
-//            ObjectInputStream oi = new ObjectInputStream(fi);
-
-            // Read objects
-//            Person pr1 = (Person) oi.readObject();
-//            Person pr2 = (Person) oi.readObject();
-
-//            System.out.println(c1.toString());
-//
-//            oi.close();
-//            fi.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
@@ -124,14 +89,14 @@ public class CompradorController {
             ObjectInputStream objIS = new ObjectInputStream(objFileIS);
             for (;;) {
                 try {
-                    this.c1 = (CompradorSer) objIS.readObject();
+                    this.c1 = (Comprador) objIS.readObject();
                     this.comprArr.add(this.c1);
                 }
                 catch (EOFException exc) {
                     break;
                 }
             }
-//            this.comprArr = (ArrayList) objIS.readObject();
+            
             objIS.close();
         }
     }
@@ -146,5 +111,6 @@ public class CompradorController {
         boolean res = c1.removeTipoImovel(tipoImovel);
         return res;
     }
+    
     
 }

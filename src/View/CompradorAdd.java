@@ -6,6 +6,7 @@
 package View;
 
 import Controller.CompradorController;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -182,8 +183,13 @@ public class CompradorAdd extends javax.swing.JFrame {
         fone = jTextFieldFone.getText();
         contatoPref = jTextFieldContatoPref.getText();
         
-        this.compCtrl.addComprador(cpf, nome, email, fone, contatoPref);
-        
+        try{
+            this.compCtrl.addComprador(cpf, nome, email, fone, contatoPref);
+            JOptionPane.showMessageDialog(this, "Cadastro feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextFieldEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldEmailActionPerformed
