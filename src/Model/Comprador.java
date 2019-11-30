@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Comprador extends Pessoa {
+public class Comprador extends Pessoa implements Serializable {
 
     private String contatoPref;
     private ArrayList<String> listaTipoImovelCompra;

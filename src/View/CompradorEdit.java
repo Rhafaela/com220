@@ -6,29 +6,43 @@
 package View;
 
 import Controller.CompradorController;
+import Model.Comprador;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Rhafaela
+ * @author john
  */
-public class CompradorAdd extends javax.swing.JFrame {
+public class CompradorEdit extends javax.swing.JFrame {
     
     private CompradorController compCtrl;
+    private int index;
 
     /**
-     * Creates new form CompradorView
+     * Creates new form CompradorEdit
      */
-    public CompradorAdd() {
+    public CompradorEdit(int pIndex) {
         this.compCtrl = new CompradorController();
-        //
+        this.index = pIndex;
+        Comprador tmp01 = this.compCtrl.getCompradorByIndex(pIndex);
         initComponents();
-        jLabel6.setText("");
-        //
-        jTextFieldCpf.setText("111.111-11");
-        jTextFieldNome.setText("Comprador");
-        jTextFieldEmail.setText("comprador@comprador.com.br");
-        jTextFieldFone.setText("(35) 3535-3535");
+        
+        // preset vars
+        jTextFieldCpf.setText(tmp01.getCpf());
+        jTextFieldNome.setText(tmp01.getNome());
+        jTextFieldEmail.setText(tmp01.getEmail());
+        jTextFieldFone.setText(tmp01.getFone());
+        // setting jComboBox
+        int formaIndex = 0;
+        int i = 0;
+        for (i = 0; i < jComboBox1.getItemCount(); i++){
+            if (jComboBox1.getItemAt(i).matches(tmp01.getContatoPref())) {
+                formaIndex = i;
+                break;
+            }
+        }
+        jComboBox1.setSelectedIndex(formaIndex);
     }
 
     /**
@@ -40,12 +54,6 @@ public class CompradorAdd extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jTextFieldCpf = new javax.swing.JTextField();
         jTextFieldNome = new javax.swing.JTextField();
         jTextFieldEmail = new javax.swing.JTextField();
@@ -53,8 +61,25 @@ public class CompradorAdd extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel6.setText("jLabel6");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Email", "Telefone", "Whatsapp" }));
+
+        jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("CPF");
 
@@ -70,17 +95,6 @@ public class CompradorAdd extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel6.setText("jLabel6");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Email", "Telefone", "Whatsapp" }));
-
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
             }
         });
 
@@ -104,7 +118,7 @@ public class CompradorAdd extends javax.swing.JFrame {
                         .addComponent(jTextFieldEmail)
                         .addComponent(jTextFieldCpf)
                         .addComponent(jTextFieldNome)))
-                .addGap(0, 119, Short.MAX_VALUE))
+                .addGap(0, 111, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(125, 125, 125)
                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -139,7 +153,7 @@ public class CompradorAdd extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -151,6 +165,11 @@ public class CompradorAdd extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //
         String campoNaoPreenchido = "Um campo necessário não foi preenchido";
@@ -161,13 +180,13 @@ public class CompradorAdd extends javax.swing.JFrame {
         String fone;
         String contatoPref;
         if (jTextFieldCpf.getText().matches("") || jTextFieldNome.getText().matches("")
-                || jTextFieldEmail.getText().matches("") 
-                || jTextFieldFone.getText().matches("")) {
+            || jTextFieldEmail.getText().matches("")
+            || jTextFieldFone.getText().matches("")) {
             jLabel6.setText(campoNaoPreenchido);
             return;
         }
         //
-        
+
         // all fields with data
         jLabel6.setText("");
         //
@@ -177,19 +196,19 @@ public class CompradorAdd extends javax.swing.JFrame {
         fone = jTextFieldFone.getText();
         contatoPref = jComboBox1.getSelectedItem().toString();
         
+        Comprador tmp = new Comprador(cpf, nome, email, fone, contatoPref);
+
         try{
-            this.compCtrl.addComprador(cpf, nome, email, fone, contatoPref);
-            JOptionPane.showMessageDialog(this, "Cadastro feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.compCtrl.editaComprador(index, tmp);
+            JOptionPane.showMessageDialog(this, "Edição feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            CompradorList ce = new CompradorList();
+            ce.setVisible(true);
+            ce.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             this.dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,20 +227,20 @@ public class CompradorAdd extends javax.swing.JFrame {
 //                }
 //            }
 //        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CompradorAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CompradorEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CompradorAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CompradorEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CompradorAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CompradorEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CompradorAdd.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//            java.util.logging.Logger.getLogger(CompradorEdit.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 //        }
 //        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new CompradorAdd().setVisible(true);
+//                new CompradorEdit().setVisible(true);
 //            }
 //        });
 //    }
