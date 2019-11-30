@@ -68,7 +68,8 @@ public class CompradorController {
     
     public String returnCompradorStr(Comprador pCom){
         String res = "";
-        res = pCom.getCpf() + "\t" + pCom.getNome() + "\t" + pCom.getFone() + "\n";
+        res = pCom.getCpf() + " - " + pCom.getNome() + " - " 
+                + pCom.getFone() + " - " + pCom.getContatoPref() + "\n";
         return res;
     }
     
