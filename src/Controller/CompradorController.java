@@ -73,8 +73,14 @@ public class CompradorController {
         return res;
     }
     
-    public void removeComprador(){
-        
+    public void removeComprador(int pIndex) throws Exception {
+        this.comprArr.remove(pIndex);
+        try {
+            this.salvarNoArquivo();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new Exception("Erro ao salvar.");
+        }
     }
     
     public void salvarNoArquivo() throws Exception {
