@@ -101,19 +101,12 @@ public class CompradorController {
         File objFile = new File(this.nomeDoArquivo);
         if (objFile.exists()) {
             FileInputStream objFileIS = new FileInputStream(this.nomeDoArquivo);
-            ObjectInputStream objIS = new ObjectInputStream(objFileIS);
-            for (;;) {
-                try {
-                    this.c1 = (Comprador) objIS.readObject();
-                    this.comprArr.add(this.c1);
-                }
-                catch (EOFException exc) {
-                    break;
-                }
+            try (ObjectInputStream objIS = new ObjectInputStream(objFileIS)) {
+                this.comprArr = (ArrayList<Comprador>) objIS.readObject();
+                objIS.close();
             }
-            
-            objIS.close();
         }
+        return;
     }
     
     
