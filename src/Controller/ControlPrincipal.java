@@ -1,7 +1,6 @@
 package Controller;
 
 import View.CompradorView;
-import View.CorretorView;
 import View.MainView;
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.util.Type.String;
 import javax.swing.JOptionPane;
@@ -10,7 +9,7 @@ public class ControlPrincipal {
     int op = -1;
     private MainView objPrincipalLimite;
     private ControlCorretor objAControlCorretor;
-    private CorretorView  objACorretorLimite;
+//    private CorretorView  objACorretorLimite;
 
     public ControlPrincipal() {
         objPrincipalLimite = new MainView();
@@ -43,7 +42,7 @@ public class ControlPrincipal {
                     JOptionPane.showMessageDialog(null, "Escolheu Cadastrar Imóvel");
                     break;
                 case 5:
-                    listaCorretor();
+//                    listaCorretor();
                 break;
                 case 6:
                     finalize();
@@ -56,9 +55,9 @@ public class ControlPrincipal {
         //return objAControlCorretor.cadCorretor(String cpf, String nome, String email, String fone, String creci, Double percentual);
     }
         
-    private boolean listaCorretor(){
-        return objACorretorLimite.mostraCorretores();
-    }
+//    private boolean listaCorretor(){
+//        return objACorretorLimite.mostraCorretores();
+//    }
     public void finalize(){
         System.exit(0);
     }

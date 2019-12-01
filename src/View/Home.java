@@ -3,7 +3,7 @@ package View;
 
 import Controller.ControlCorretor;
 import Controller.CtrlImovel;
-import com.sun.prism.image.Coords;
+//import com.sun.prism.image.Coords;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -56,6 +56,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
 //Mostra resultados dos corretores (teste)
         resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
+        String i = ctrleImovel.listaImoveis();
         resultado.setText(c);
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
         this.add(painel);        
