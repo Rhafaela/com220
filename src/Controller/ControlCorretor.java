@@ -1,6 +1,5 @@
 package Controller;
 
-import View.CorretorView;
 import Model.Corretor;
 import java.util.*;
 import java.io.*;
@@ -8,8 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
-public class ControlCorretor {
-    private CorretorView objACorretorLimite = new CorretorView();
+public class ControlCorretor {    
     private Corretor objACorretorEntidade;
     private String[] dadosForm;
     private ArrayList<Corretor> vecACorretor = new ArrayList();    
@@ -44,10 +42,6 @@ public class ControlCorretor {
     
     }
     
-//    private void cadastra(){
-//        dadosForm = objACorretorLimite.form();
-//    }
-    
     public void addVetor(Corretor pcorretor){
         vecACorretor.add(pcorretor);
     }
@@ -65,14 +59,12 @@ public class ControlCorretor {
         String vet = "";
         vecACorretor = getListaCorretores();
         vet = "Código" + "t \t \t \t \t \t \t \t" + "Nome\n";
+         String cpf;
                 
         for(int i =0; i < vecACorretor.size();i++){
-            vet += vecACorretor.get(i).getCreci()+ "\t \t \t \t \t \t \t \t" + vecACorretor.get(i).getNome() +"\n";
-            
+            vet += ValidarCPF.imprimeCPF(vecACorretor.get(i).getCpf()) + "\t \t \t \t \t \t \t \t" + vecACorretor.get(i).getNome() +"\n";
         }
-  
         return vet;
-        
     }
     
     private ArrayList desserializeCorretor() throws Exception {        
