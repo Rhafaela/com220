@@ -79,7 +79,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
         /*Menu de Cadastros */
         JMenu cadastro = new JMenu("Cadastrar");
-        cadastro.setPreferredSize(new java.awt.Dimension(larg/3, alt/3));
+        cadastro.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         cadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/group_add.png")));
         menu.add(cadastro);
         
@@ -104,28 +104,32 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
         /*Menu de Catalogo */
         JMenu catalogo = new JMenu("Catalogo");
-        catalogo.setPreferredSize(new java.awt.Dimension(larg/3, alt/3));
+        catalogo.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         catalogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/page_white_picture.png")));
         menu.add(catalogo);
-        
-        JMenuItem listaComprador = new JMenuItem("Compradores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
-        listaComprador.setBorder(null);
-        
-        catalogo.add(listaComprador);
         /*Fim Menu de Catalogo*/
 
         
         /*Menu de Propostas Pendentes */
         JMenu proposta_pend = new JMenu("Propostas Pendentes");
-        proposta_pend.setPreferredSize(new java.awt.Dimension(larg/3, alt/3));
+        proposta_pend.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         proposta_pend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/money.png")));
         menu.add(proposta_pend);
         /*Fim Menu de Propostas Pendentes*/
         
+        /*Menu Editar dados cadastrados */
+        JMenu editar = new JMenu("Editar");
+        editar.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
+        editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user_edit.png")));
+        menu.add(editar);
+        
+        JMenuItem listaComprador = new JMenuItem("Compradores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        listaComprador.setBorder(null);
+        editar.add(listaComprador);
         /*------- FIM MENU --------*/
         
         
-        /* --------- AÇÕES DOS MENUS ----------*/
+/* --------- AÇÕES DOS MENUS ----------*/
         
         
         //ação Menu Cadastrar Corretor
@@ -160,8 +164,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 im.setSize(larg/2, 480);
                 im.setLocationRelativeTo(null);
                 im.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            }
-                    
+            }                    
         });
         
         listaComprador.addActionListener(new ActionListener(){
