@@ -2,23 +2,18 @@
 package View;
 
 import Controller.ControlCorretor;
+import Controller.ControleVendedor;
 import Controller.CtrlImovel;
 //import com.sun.prism.image.Coords;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -34,6 +29,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     Toolkit kit = Toolkit.getDefaultToolkit();  
     Dimension tamTela = kit.getScreenSize();  
     
+    private ControleVendedor ctrlVendedor;
     private ControlCorretor ctrlCorretor;
     private CtrlImovel ctrleImovel;
         
@@ -154,7 +150,18 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                cv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
-        
+        //Ação Menu de Cdastrar Vendedor
+        cadVendedor.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               VendedorAdd vv = new VendedorAdd();
+               vv.setVisible(true);
+               vv.setSize(larg/2, alt/2);
+               vv.setLocationRelativeTo(null);
+               vv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+                
         //Acao no menu para cadastrar imovel
         cadImovel.addActionListener(new ActionListener(){
             @Override
@@ -186,19 +193,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     }
     
     
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void windowOpened(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void windowClosing(WindowEvent e) {        
-    }
+    
 
     @Override
     public void windowClosed(WindowEvent e) {
@@ -210,25 +205,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         System.exit(0);
     }
 
-    @Override
-    public void windowIconified(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }      
+       
     
     private void adicionarComponente(JPanel painel, JComponent componente,
             int gridx, int gridy, int height, int width) {
@@ -242,5 +219,40 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         c.gridheight = height;
         c.gridwidth = width;
         painel.add(componente, c);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowOpened(WindowEvent we) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowClosing(WindowEvent we) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowIconified(WindowEvent we) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent we) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowActivated(WindowEvent we) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent we) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
