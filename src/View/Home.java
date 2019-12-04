@@ -51,12 +51,17 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class Home extends JFrame implements ActionListener, WindowListener{
     
     //Pegando tamanho em largura e altura da tela
     Toolkit kit = Toolkit.getDefaultToolkit();  
     Dimension tamTela = kit.getScreenSize();  
+    
+     String sel;
+     int aux;
     
     private ControleVendedor ctrlVendedor;
     private ControlCorretor ctrlCorretor;
@@ -99,7 +104,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         //Criando painel tipoImoveis
 //        JPanel tiposImoveis = new JPanel(new BorderLayout());
          
-          tiposImoveis.setBackground(white);
+        tiposImoveis.setBackground(white);
                   
         tiposImoveisJComboBox = new JComboBox();
         tiposImoveisJComboBox.setPreferredSize( new Dimension(300,25) );
@@ -360,10 +365,11 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 try {
                     listaImoveisPorTipo.removeAll();
                     listaImoveisPorTipo.updateUI();
+                    sel="";
                     
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);                    
                     for(Imovel i : vecAImovel){
-                        System.out.println(i.getCodigo());
+//                        System.out.println(i.getCodigo());
     //                        file = new File(i.getArquivoFoto());
     //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
 
@@ -397,10 +403,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 try {
                     listaImoveisPorTipoCasa.removeAll();
                     listaImoveisPorTipoCasa.updateUI();
+                    sel="";
+                    
                     
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
                     for(Imovel i : vecAImovel){
-                        System.out.println(i.getCodigo());
+//                        System.out.println(i.getCodigo());
     //                        file = new File(i.getArquivoFoto());
     //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
 
@@ -433,10 +441,11 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 try {
                     listaImoveisTipoLote.removeAll();
                     listaImoveisTipoLote.updateUI();
+                    sel="";
                     
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
                     for(Imovel i : vecAImovel){
-                        System.out.println(i.getCodigo());
+//                        System.out.println(i.getCodigo());
     //                        file = new File(i.getArquivoFoto());
     //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
 
@@ -469,9 +478,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                     listaImoveisTipoSalaComercial.removeAll();
                     listaImoveisTipoSalaComercial.updateUI();
                     
+                    sel="";
+                    
+                    
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
                     for(Imovel i : vecAImovel){
-                        System.out.println(i.getCodigo());
+//                        System.out.println(i.getCodigo());
     //                        file = new File(i.getArquivoFoto());
     //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
 
@@ -506,7 +518,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                     
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
                     for(Imovel i : vecAImovel){
-                        System.out.println(i.getCodigo());
+//                        System.out.println(i.getCodigo());
     //                        file = new File(i.getArquivoFoto());
     //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
 
@@ -539,16 +551,30 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     
-                   int select = -1;
-                   
+                   int select = -1;                                                                            
                    select = lista.getSelectedIndex();
-                   
+                                                         
                    if(select == -1){
                        JOptionPane.showMessageDialog(null, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
                         return;
                    }
+                   
+//                   lista.addListSelectionListener(new ListSelectionListener() {
+//                      
+//                       @Override
+//                       public void valueChanged(ListSelectionEvent e) {
+                           sel = (String)lista.getSelectedValue().toString();
+                           aux = Integer.parseInt(sel);
+//                       }
+//                   });
                                                         
-                    DetalhesImoveis det = new DetalhesImoveis(select);
+                    System.out.println(op);
+                    DetalhesImoveis det = null;
+                    try {
+                        det = new DetalhesImoveis(aux);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     det.setVisible(true);
                     det.setSize(larg/2, 480);
                     det.setLocationRelativeTo(null);

@@ -53,7 +53,7 @@ public class CtrlImovel {
         vet = "Código" + "t \t \t \t \t \t \t \t" + "Nome\n";
                 
         for(int i =0; i < vecAImovel.size();i++){
-            vet += vecAImovel.get(i).getCodigo()+ "\t \t \t \t \t \t \t \t" + vecAImovel.get(i).getTipo()+"\n";            
+            vet += vecAImovel.get(i).getArquivoFoto()+ "\t \t \t \t \t \t \t \t" + vecAImovel.get(i).getTipo()+"\n";            
         }
  
         return vet;        
