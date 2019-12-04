@@ -178,6 +178,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             }                    
         });
         
+        listaVendedor.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               VendedorList vl = new VendedorList();
+               vl.setVisible(true);
+               vl.setSize(larg/2, alt/2);
+               vl.setLocationRelativeTo(null);
+               vl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+        
         listaComprador.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
