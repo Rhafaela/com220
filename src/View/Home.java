@@ -2,17 +2,22 @@
 package View;
 
 import Controller.ControlCorretor;
+import Controller.ControleVendedor;
 import Controller.CtrlImovel;
 import Model.Imovel;
 import Model.Util;
 import java.awt.BorderLayout;
 //import com.sun.prism.image.Coords;
+
 import java.awt.CardLayout;
 import static java.awt.Color.white;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+
+import java.awt.Dimension;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -20,15 +25,16 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,6 +56,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     Toolkit kit = Toolkit.getDefaultToolkit();  
     Dimension tamTela = kit.getScreenSize();  
     
+    private ControleVendedor ctrlVendedor;
     private ControlCorretor ctrlCorretor;
     private CtrlImovel ctrleImovel;
         
@@ -208,10 +215,14 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         editar.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user_edit.png")));
         menu.add(editar);
-        
+       
         JMenuItem listaComprador = new JMenuItem("Compradores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         listaComprador.setBorder(null);
         editar.add(listaComprador);
+        
+        JMenuItem listaVendedor = new JMenuItem("Vendedores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        listaVendedor.setBorder(null);
+        editar.add(listaVendedor);
         /*------- FIM MENU --------*/
         
         
@@ -240,7 +251,18 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                cv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
-        
+        //Ação Menu de Cdastrar Vendedor
+        cadVendedor.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               VendedorAdd vv = new VendedorAdd();
+               vv.setVisible(true);
+               vv.setSize(larg/2, alt/2);
+               vv.setLocationRelativeTo(null);
+               vv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+                
         //Acao no menu para cadastrar imovel
         cadImovel.addActionListener(new ActionListener(){
             @Override
@@ -277,9 +299,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
-    
-    
-    @Override
+
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == tiposImoveisJComboBox){
             String op = (String) tiposImoveisJComboBox.getSelectedItem();
@@ -294,39 +314,54 @@ public class Home extends JFrame implements ActionListener, WindowListener{
              JButton btnMostra = new JButton();
              
              //Pega largura e altura da tela 
-        int larg = tamTela.width;  
-        int alt = tamTela.height;
-             
+            int larg = tamTela.width;  
+            int alt = tamTela.height;
+
             if(op == "Apartamento"){
                 try {
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
                     for(Imovel i : vecAImovel){
                         System.out.println(i.getCodigo());
-//                        file = new File(i.getArquivoFoto());
-//                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
-                                               
+    //                        file = new File(i.getArquivoFoto());
+    //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
+
                         list.addElement(i.getCodigo());
-                   
+
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
                 lista.setModel(list);
                 lista.setPreferredSize( new Dimension(400,300) );
                 scrollPane.setViewportView(lista);
-                
+
                 btnMostra.setText("Detalhes");
                 panel.add(scrollPane);
                 panel.add(btnMostra);
                 panel.setPreferredSize( new Dimension(larg,300) );
-                
+
                 listaImoveisPorTipo.add(panel);
                 listaImoveisPorTipo.setVisible(true);
             }
         }
+
     }
-   
+    
+      private void adicionarComponente(JPanel painel, JComponent componente,
+            int gridx, int gridy, int height, int width) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(5, 5, 5, 5);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.gridheight = height;
+        c.gridwidth = width;
+        painel.add(componente, c);
+
+    }
 
     @Override
     public void windowOpened(WindowEvent e) {
@@ -334,17 +369,13 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     }
 
     @Override
-    public void windowClosing(WindowEvent e) {        
+    public void windowClosing(WindowEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void windowClosed(WindowEvent e) {
-//        try {
-//            ctrlCorretor.finalize();
-//        } catch (Exception ex) {
-//            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-        System.exit(0);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -365,24 +396,5 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     @Override
     public void windowDeactivated(WindowEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }      
-    
-    private void adicionarComponente(JPanel painel, JComponent componente,
-            int gridx, int gridy, int height, int width) {
-        GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 5, 5);
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.gridx = gridx;
-        c.gridy = gridy;
-        c.gridheight = height;
-        c.gridwidth = width;
-        c.anchor = (gridx == 0) ? GridBagConstraints.LINE_START : GridBagConstraints.LINE_END;
-//        c.fill = GridBagConstraints.HORIZONTAL;
-                       
-        painel.add(componente, c);
     }
-    
-    
 }
