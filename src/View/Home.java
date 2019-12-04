@@ -118,10 +118,14 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         editar.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         editar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user_edit.png")));
         menu.add(editar);
-        
+       
         JMenuItem listaComprador = new JMenuItem("Compradores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         listaComprador.setBorder(null);
         editar.add(listaComprador);
+        
+        JMenuItem listaVendedor = new JMenuItem("Vendedores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        listaVendedor.setBorder(null);
+        editar.add(listaVendedor);
         /*------- FIM MENU --------*/
         
         
