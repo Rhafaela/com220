@@ -10,6 +10,7 @@ import java.awt.BorderLayout;
 //import com.sun.prism.image.Coords;
 
 import java.awt.CardLayout;
+import static java.awt.Color.red;
 import static java.awt.Color.white;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -45,6 +46,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -62,8 +64,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
     //Painel na pagina inicial de Teste Leitura dos corretores
     private final JPanel painel = new JPanel(new GridBagLayout());
+    JPanel tiposImoveis = new JPanel(new BorderLayout());  
     JPanel listaImoveisPorTipo = new JPanel();
     JPanel listaImoveisPorTipoCasa = new JPanel();
+    JPanel listaImoveisTipoLote = new JPanel();
+    JPanel listaImoveisTipoSalaComercial = new JPanel();
+    JPanel listaImoveisPropiedadeRural = new JPanel();
     private final JTextArea resultado = new JTextArea(5, 10);
     
     private final JTextArea re = new JTextArea(5,10);
@@ -92,7 +98,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
         //Criando painel tipoImoveis
 //        JPanel tiposImoveis = new JPanel(new BorderLayout());
-          JPanel tiposImoveis = new JPanel(new BorderLayout());  
+         
           tiposImoveis.setBackground(white);
                   
         tiposImoveisJComboBox = new JComboBox();
@@ -138,10 +144,26 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 BorderFactory.createEmptyBorder()));
         listaImoveisPorTipoCasa.setVisible(false);
         
+        listaImoveisTipoLote.setBackground(white);        
+        listaImoveisTipoLote.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder()));
+        listaImoveisTipoLote.setVisible(false);
+        
+        listaImoveisTipoSalaComercial.setBackground(white); 
+        listaImoveisTipoSalaComercial.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder()));
+        listaImoveisTipoSalaComercial.setVisible(false);
+        
+        listaImoveisPropiedadeRural.setBackground(white); 
+        listaImoveisPropiedadeRural.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder()));
+        listaImoveisPropiedadeRural.setVisible(false);
         
         tiposImoveis.add(panelTipoImovel, BorderLayout.NORTH);
-        tiposImoveis.add(listaImoveisPorTipo, BorderLayout.CENTER);
-        tiposImoveis.add(listaImoveisPorTipoCasa, BorderLayout.CENTER);
+        
         
         
 //Mostra resultados dos corretores (teste)
@@ -327,17 +349,19 @@ public class Home extends JFrame implements ActionListener, WindowListener{
 //             Image imgs;
              JScrollPane scrollPane = new JScrollPane();
              JPanel panel = new JPanel();
-             
+                         
              JButton btnMostra = new JButton();
              
              //Pega largura e altura da tela 
             int larg = tamTela.width;  
             int alt = tamTela.height;
 
-//            vecAImovel.clear();
-            if(op == "Apartamento"){
+            if(op.equals("Apartamento")){
                 try {
-                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
+                    listaImoveisPorTipo.removeAll();
+                    listaImoveisPorTipo.updateUI();
+                    
+                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);                    
                     for(Imovel i : vecAImovel){
                         System.out.println(i.getCodigo());
     //                        file = new File(i.getArquivoFoto());
@@ -360,11 +384,20 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 panel.setPreferredSize( new Dimension(larg,300) );
 
                 listaImoveisPorTipo.add(panel);
+                tiposImoveis.add(listaImoveisPorTipo, BorderLayout.CENTER);
+                                               
+                listaImoveisPorTipoCasa.setVisible(false);
+                listaImoveisTipoLote.setVisible(false);
+                listaImoveisTipoSalaComercial.setVisible(false);
+                listaImoveisPropiedadeRural.setVisible(false);
                 listaImoveisPorTipo.setVisible(true);
             }
             
-            if(op == "Casa"){
+            if(op.equals("Casa")){
                 try {
+                    listaImoveisPorTipoCasa.removeAll();
+                    listaImoveisPorTipoCasa.updateUI();
+                    
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
                     for(Imovel i : vecAImovel){
                         System.out.println(i.getCodigo());
@@ -372,7 +405,6 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
 
                         list.addElement(i.getCodigo());
-
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
@@ -388,17 +420,147 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 panel.setPreferredSize( new Dimension(larg,300) );
 
                 listaImoveisPorTipoCasa.add(panel);
+                tiposImoveis.add(listaImoveisPorTipoCasa, BorderLayout.CENTER);
+                                
                 listaImoveisPorTipo.setVisible(false);
+                listaImoveisTipoLote.setVisible(false);
+                listaImoveisTipoSalaComercial.setVisible(false);
+                listaImoveisPropiedadeRural.setVisible(false);
                 listaImoveisPorTipoCasa.setVisible(true);
-                
             }
+                        
+            if(op.equals("Lote")){
+                try {
+                    listaImoveisTipoLote.removeAll();
+                    listaImoveisTipoLote.updateUI();
+                    
+                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
+                    for(Imovel i : vecAImovel){
+                        System.out.println(i.getCodigo());
+    //                        file = new File(i.getArquivoFoto());
+    //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
+
+                        list.addElement(i.getCodigo());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                lista.setModel(list);
+                lista.setPreferredSize( new Dimension(400,300) );
+                scrollPane.setViewportView(lista);
+
+                btnMostra.setText("Detalhes");
+                panel.add(scrollPane);
+                panel.add(btnMostra);
+                panel.setPreferredSize( new Dimension(larg,300) );
+
+                listaImoveisTipoLote.add(panel);
+                tiposImoveis.add(listaImoveisTipoLote, BorderLayout.CENTER);
+                                
+                listaImoveisPorTipo.setVisible(false);
+                listaImoveisPorTipoCasa.setVisible(false);
+                listaImoveisTipoSalaComercial.setVisible(false);
+                listaImoveisPropiedadeRural.setVisible(false);
+                listaImoveisTipoLote.setVisible(true);
+            }
+            if(op.equals("Sala Comercial")){
+                try {
+                    listaImoveisTipoSalaComercial.removeAll();
+                    listaImoveisTipoSalaComercial.updateUI();
+                    
+                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
+                    for(Imovel i : vecAImovel){
+                        System.out.println(i.getCodigo());
+    //                        file = new File(i.getArquivoFoto());
+    //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
+
+                        list.addElement(i.getCodigo());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                lista.setModel(list);
+                lista.setPreferredSize( new Dimension(400,300) );
+                scrollPane.setViewportView(lista);
+
+                btnMostra.setText("Detalhes");
+                panel.add(scrollPane);
+                panel.add(btnMostra);
+                panel.setPreferredSize( new Dimension(larg,300) );
+
+                listaImoveisTipoSalaComercial.add(panel);
+                tiposImoveis.add(listaImoveisTipoSalaComercial, BorderLayout.CENTER);
+                                
+                listaImoveisPorTipo.setVisible(false);
+                listaImoveisPorTipoCasa.setVisible(false);
+                listaImoveisTipoLote.setVisible(false);
+                listaImoveisPropiedadeRural.setVisible(false);
+                listaImoveisTipoSalaComercial.setVisible(true);
+            }
+            if(op.equals("Propriedade Rural")){
+                try {
+                    listaImoveisPropiedadeRural.removeAll();
+                    listaImoveisPropiedadeRural.updateUI();
+                    
+                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
+                    for(Imovel i : vecAImovel){
+                        System.out.println(i.getCodigo());
+    //                        file = new File(i.getArquivoFoto());
+    //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
+
+                        list.addElement(i.getCodigo());
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                lista.setModel(list);
+                lista.setPreferredSize( new Dimension(400,300) );
+                scrollPane.setViewportView(lista);
+
+                btnMostra.setText("Detalhes");
+                panel.add(scrollPane);
+                panel.add(btnMostra);
+                panel.setPreferredSize( new Dimension(larg,300) );
+
+                listaImoveisPropiedadeRural.add(panel);
+                tiposImoveis.add(listaImoveisPropiedadeRural, BorderLayout.CENTER);
+                                
+                listaImoveisPorTipo.setVisible(false);
+                listaImoveisPorTipoCasa.setVisible(false);
+                listaImoveisTipoLote.setVisible(false);
+                listaImoveisTipoSalaComercial.setVisible(false);
+                listaImoveisPropiedadeRural.setVisible(true);
+            }
+           
+            btnMostra.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    
+                   int select = -1;
+                   
+                   select = lista.getSelectedIndex();
+                   
+                   if(select == -1){
+                       JOptionPane.showMessageDialog(null, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                   }
+                                                        
+                    DetalhesImoveis det = new DetalhesImoveis(select);
+                    det.setVisible(true);
+                    det.setSize(larg/2, 480);
+                    det.setLocationRelativeTo(null);
+                    det.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                }
+            });
             
         }
-
     }
     
-      private void adicionarComponente(JPanel painel, JComponent componente,
-            int gridx, int gridy, int height, int width) {
+    private void adicionarComponente(JPanel painel, JComponent componente,
+        int gridx, int gridy, int height, int width) {
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
         c.fill = GridBagConstraints.BOTH;

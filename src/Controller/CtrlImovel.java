@@ -76,6 +76,10 @@ public class CtrlImovel {
         vecAImovel = desserializeImovel();
         return vecAImovel;
     }
+    
+     public Imovel getImovelrByIndex(int pIndex){
+        return this.vecAImovel.get(pIndex);
+    }
      
     public ArrayList getListaImoveisPorTipo(String tipo) throws Exception{
         vecAImovel= desserializeImovel();        
