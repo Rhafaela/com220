@@ -63,6 +63,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     //Painel na pagina inicial de Teste Leitura dos corretores
     private final JPanel painel = new JPanel(new GridBagLayout());
     JPanel listaImoveisPorTipo = new JPanel();
+    JPanel listaImoveisPorTipoCasa = new JPanel();
     private final JTextArea resultado = new JTextArea(5, 10);
     
     private final JTextArea re = new JTextArea(5,10);
@@ -125,18 +126,23 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
         
         
-        listaImoveisPorTipo.setBackground(white);
-        
+        listaImoveisPorTipo.setBackground(white);        
         listaImoveisPorTipo.setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createEmptyBorder(35, 55, 35, 55),
                 BorderFactory.createEmptyBorder()));
-
         listaImoveisPorTipo.setVisible(false);
 
+        listaImoveisPorTipoCasa.setBackground(white); 
+        listaImoveisPorTipoCasa.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder()));
+        listaImoveisPorTipoCasa.setVisible(false);
         
         
         tiposImoveis.add(panelTipoImovel, BorderLayout.NORTH);
         tiposImoveis.add(listaImoveisPorTipo, BorderLayout.CENTER);
+        tiposImoveis.add(listaImoveisPorTipoCasa, BorderLayout.CENTER);
+        
         
 //Mostra resultados dos corretores (teste)
         resultado.setEditable(false);
@@ -328,6 +334,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             int larg = tamTela.width;  
             int alt = tamTela.height;
 
+//            vecAImovel.clear();
             if(op == "Apartamento"){
                 try {
                     vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
@@ -355,6 +362,37 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 listaImoveisPorTipo.add(panel);
                 listaImoveisPorTipo.setVisible(true);
             }
+            
+            if(op == "Casa"){
+                try {
+                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
+                    for(Imovel i : vecAImovel){
+                        System.out.println(i.getCodigo());
+    //                        file = new File(i.getArquivoFoto());
+    //                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
+
+                        list.addElement(i.getCodigo());
+
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                lista.setModel(list);
+                lista.setPreferredSize( new Dimension(400,300) );
+                scrollPane.setViewportView(lista);
+
+                btnMostra.setText("Detalhes");
+                panel.add(scrollPane);
+                panel.add(btnMostra);
+                panel.setPreferredSize( new Dimension(larg,300) );
+
+                listaImoveisPorTipoCasa.add(panel);
+                listaImoveisPorTipo.setVisible(false);
+                listaImoveisPorTipoCasa.setVisible(true);
+                
+            }
+            
         }
 
     }
