@@ -3,13 +3,19 @@ package View;
 
 import Controller.ControlCorretor;
 import Controller.CtrlImovel;
+import Model.Imovel;
+import Model.Util;
+import java.awt.BorderLayout;
 //import com.sun.prism.image.Coords;
 import java.awt.CardLayout;
-import java.awt.Color;
+import static java.awt.Color.white;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -17,16 +23,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListCellRenderer;
 
 public class Home extends JFrame implements ActionListener, WindowListener{
     
@@ -39,7 +55,15 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
     //Painel na pagina inicial de Teste Leitura dos corretores
     private final JPanel painel = new JPanel(new GridBagLayout());
+    JPanel listaImoveisPorTipo = new JPanel();
     private final JTextArea resultado = new JTextArea(5, 10);
+    
+    private final JTextArea re = new JTextArea(5,10);
+    
+    private Container pane;
+    CardLayout layout;
+    
+    private JComboBox tiposImoveisJComboBox;
     
     //METODO CONSTRUTOR
     public Home() throws Exception{
@@ -53,20 +77,76 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         ctrlCorretor = new ControlCorretor();
         ctrleImovel = new CtrlImovel();
         
+        //setando layout
+        layout = new CardLayout();
+        setLayout(layout);
+        pane = this.getContentPane();
+        
+        //Criando painel tipoImoveis
+//        JPanel tiposImoveis = new JPanel(new BorderLayout());
+          JPanel tiposImoveis = new JPanel(new BorderLayout());  
+          tiposImoveis.setBackground(white);
+                  
+        tiposImoveisJComboBox = new JComboBox();
+        tiposImoveisJComboBox.setPreferredSize( new Dimension(300,25) );
+        
+        tiposImoveisJComboBox.addItem(Util.LOTE);
+        tiposImoveisJComboBox.addItem(Util.CASA);
+        tiposImoveisJComboBox.addItem(Util.APTO);
+        tiposImoveisJComboBox.addItem(Util.SALA);
+        tiposImoveisJComboBox.addItem(Util.RURAL);
+        tiposImoveisJComboBox.addActionListener(this);
+       
+        JPanel panelTipoImovel = new JPanel();
+        panelTipoImovel.setBackground(white);
+        panelTipoImovel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder()));
+  
+        //        adicionarComponente(teste, new JLabel("Tipo"), 0, 0, 1, 1);
+        JLabel nameTipo = new JLabel();
+        nameTipo.setSize(50,20);
+        nameTipo.setText("Tipo");
+        nameTipo.setFont(new Font("Serif", Font.BOLD, 15));
+        nameTipo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 40, 35, 40),
+                BorderFactory.createEmptyBorder()));
+        panelTipoImovel.add(nameTipo);
+        panelTipoImovel.add(tiposImoveisJComboBox);
+        
+        
+        
+        
+        
+        listaImoveisPorTipo.setBackground(white);
+        
+        listaImoveisPorTipo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(35, 55, 35, 55),
+                BorderFactory.createEmptyBorder()));
+
+        listaImoveisPorTipo.setVisible(false);
+
+        
+        
+        tiposImoveis.add(panelTipoImovel, BorderLayout.NORTH);
+        tiposImoveis.add(listaImoveisPorTipo, BorderLayout.CENTER);
+        
 //Mostra resultados dos corretores (teste)
         resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
         String i = ctrleImovel.listaImoveis();
-        resultado.setText(c);
+        resultado.setText(i);
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
-        this.add(painel);        
+//        this.add(painel);        
 //        setLayout(new FlowLayout());
 //        textArea = new JTextArea(5,10);
 //        textArea.setPreferredSize(new java.awt.Dimension(larg/2, alt/2));
 //        add(textArea);
                 
 /**** ---------- FIM MOSTRA TESTE *-----------------------*/
-        
+     pane.add("Home", painel);  
+     pane.add("Tipos", tiposImoveis);  
+     
         
         /*------- MENU -------------*/
         JMenuBar menu = new JMenuBar();
@@ -84,7 +164,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         menu.add(cadastro);
         
         JMenuItem cadVendedor = new JMenuItem("Vendedor", new ImageIcon(getClass().getResource("/image/user_add.png")));
-        cadVendedor.setPreferredSize(new java.awt.Dimension(larg/(4), 20));
+        cadVendedor.setPreferredSize(new java.awt.Dimension(larg/(5), 20));
         cadVendedor.setBorder(null);
         
         JMenuItem cadCorretor = new JMenuItem("Corretor", new ImageIcon(getClass().getResource("/image/user_suit.png")));
@@ -107,6 +187,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         catalogo.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         catalogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/page_white_picture.png")));
         menu.add(catalogo);
+        
+        JMenuItem listaCatalogo = new JMenuItem("Lista Catálogo", new ImageIcon(getClass().getResource("/image/user_add.png")));
+        listaCatalogo.setPreferredSize(new java.awt.Dimension(larg/(5), 20));
+        listaCatalogo.setBorder(null);
+        
+        catalogo.add(listaCatalogo);
         /*Fim Menu de Catalogo*/
 
         
@@ -178,6 +264,13 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             }
         });
         
+        listaCatalogo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              layout.show(pane,"Tipos");
+            }
+        });
+      
         
         //Setando o JFrame
         this.setSize(larg,alt);
@@ -188,8 +281,52 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(e.getSource() == tiposImoveisJComboBox){
+            String op = (String) tiposImoveisJComboBox.getSelectedItem();
+             ArrayList<Imovel> vecAImovel = new ArrayList();
+             DefaultListModel list = new DefaultListModel();
+             JList lista = new JList();
+//             File file;
+//             Image imgs;
+             JScrollPane scrollPane = new JScrollPane();
+             JPanel panel = new JPanel();
+             
+             JButton btnMostra = new JButton();
+             
+             //Pega largura e altura da tela 
+        int larg = tamTela.width;  
+        int alt = tamTela.height;
+             
+            if(op == "Apartamento"){
+                try {
+                    vecAImovel = ctrleImovel.getListaImoveisPorTipo(op);
+                    for(Imovel i : vecAImovel){
+                        System.out.println(i.getCodigo());
+//                        file = new File(i.getArquivoFoto());
+//                        imgs = new ImageIcon(file.getAbsolutePath()).getImage().getScaledInstance(50, 75, Image.SCALE_DEFAULT);
+                                               
+                        list.addElement(i.getCodigo());
+                   
+                    }
+                } catch (Exception ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                lista.setModel(list);
+                lista.setPreferredSize( new Dimension(400,300) );
+                scrollPane.setViewportView(lista);
+                
+                btnMostra.setText("Detalhes");
+                panel.add(scrollPane);
+                panel.add(btnMostra);
+                panel.setPreferredSize( new Dimension(larg,300) );
+                
+                listaImoveisPorTipo.add(panel);
+                listaImoveisPorTipo.setVisible(true);
+            }
+        }
     }
+   
 
     @Override
     public void windowOpened(WindowEvent e) {
@@ -241,6 +378,11 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         c.gridy = gridy;
         c.gridheight = height;
         c.gridwidth = width;
+        c.anchor = (gridx == 0) ? GridBagConstraints.LINE_START : GridBagConstraints.LINE_END;
+//        c.fill = GridBagConstraints.HORIZONTAL;
+                       
         painel.add(componente, c);
     }
+    
+    
 }

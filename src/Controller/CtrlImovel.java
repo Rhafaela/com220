@@ -72,11 +72,23 @@ public class CtrlImovel {
         return vecAImovel;
     } 
     
-     public  ArrayList getListaImoveis() throws Exception{
+    public  ArrayList getListaImoveis() throws Exception{
         vecAImovel = desserializeImovel();
         return vecAImovel;
     }
      
+    public ArrayList getListaImoveisPorTipo(String tipo) throws Exception{
+        vecAImovel= desserializeImovel();        
+        ArrayList<Imovel> vecAImovelPorTipo = new ArrayList();                   
+        for(Imovel i : vecAImovel){
+            if(i.getTipo().equals(tipo)){
+                vecAImovelPorTipo.add(i);
+            }
+        }
+        
+        return vecAImovelPorTipo;
+    }
+    
     public boolean verificaCodigo(int cod) throws Exception{
         
         boolean possuiImovel = false;
