@@ -8,6 +8,7 @@ package View;
 import Controller.CompradorController;
 import Controller.ControlCorretor;
 import Controller.VisitaController;
+import javax.swing.JFrame;
 
 /**
  *
@@ -146,7 +147,7 @@ public class AgendarVisita extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        // SALVAR a visita
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -156,7 +157,9 @@ public class AgendarVisita extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // instantiate the calendar
-        
+        //JavaSwingCalendar calend = new JavaSwingCalendar("Escolha a data");
+        //calend.setVisible(true);
+        //calend.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
