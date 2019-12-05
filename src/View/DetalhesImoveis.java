@@ -171,8 +171,8 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
                 //
                 AgendarVisita av = new AgendarVisita(imovelItem);
                 System.out.println(imovelItem);
-                //av.setVisible(true);
-                //av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                av.setVisible(true);
+                av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
         
