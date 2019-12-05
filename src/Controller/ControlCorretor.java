@@ -57,17 +57,10 @@ public class ControlCorretor {
         String vet = "";
         vecACorretor = getListaCorretores();
         vet = "Código" + "t \t \t \t \t \t \t \t" + "Nome\n";
-<<<<<<< HEAD
         String cpf;
 
         for (int i = 0; i < vecACorretor.size(); i++) {
             vet += ValidarCPF.imprimeCPF(vecACorretor.get(i).getCpf()) + "\t \t \t \t \t \t \t \t" + vecACorretor.get(i).getNome() + "\n";
-=======
-         String cpf;
-                
-        for(int i =0; i < vecACorretor.size();i++){
-//            vet += ValidarCPF.imprimeCPF(vecACorretor.get(i).getCpf()) + "\t \t \t \t \t \t \t \t" + vecACorretor.get(i).getNome() +"\n";
->>>>>>> d92c27b59e6890ae82f8284b5b77f529a0cb4155
         }
         return vet;
     }

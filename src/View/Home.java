@@ -203,12 +203,8 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
         String i = ctrleImovel.listaImoveis();
-<<<<<<< HEAD
-        resultado.setText(c);
-=======
         String p = ctrolProposta.lista();
         resultado.setText(p);
->>>>>>> d92c27b59e6890ae82f8284b5b77f529a0cb4155
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
 //        this.add(painel);        
 //        setLayout(new FlowLayout());
