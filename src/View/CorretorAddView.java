@@ -56,8 +56,8 @@ public class CorretorAddView extends JFrame implements ActionListener{
     private JLabel creci = new JLabel("CRECI");
     private final JTextField tfcreci = new JTextField(20);
     
-//    private JLabel pctVenda = new JLabel("Percentual de Venda");
-//    private final JTextField tfPctVenda = new JTextField(20);
+    private JLabel pctVenda = new JLabel("Percentual de Venda");
+    private final JTextField tfPctVenda = new JTextField(20);
     
     private final JButton btnCadastrar = new JButton("Cadastrar");
     
@@ -90,8 +90,8 @@ public class CorretorAddView extends JFrame implements ActionListener{
         adicionarComponente(painel, new JLabel("CRECI"), 0, 4, 1, 1);
         adicionarComponente(painel, tfcreci, 1, 4, 1, 1);
         
-//        adicionarComponente(painel, new JLabel("Percentual de Vendas"), 0, 5, 1, 1);
-//        adicionarComponente(painel, tfPctVenda, 1, 5, 1, 1);
+        adicionarComponente(painel, new JLabel("Percentual de Vendas"), 0, 5, 1, 1);
+        adicionarComponente(painel, tfPctVenda, 1, 5, 1, 1);
         
         btnCadastrar.addActionListener(this);
         adicionarComponente(painel, btnCadastrar, 0, 6, 1, 2);
@@ -126,10 +126,10 @@ public class CorretorAddView extends JFrame implements ActionListener{
             String email = tfemail.getText();
             String fone = tfFone.getText();
             String creci = tfcreci.getText();
-            Double porcentagem = 40.0;
+            Double porcentagem = Double.parseDouble(tfPctVenda.getText());
             
             if(ValidarCPF.isCPF(cpf) == true){
-                controle.cadCorretor(cpf, nome, email, fone, creci, porcentagem);
+                controle.cadCorretor(cpf, porcentagem, nome, email, fone, creci);
                 JOptionPane.showMessageDialog(this, "Cadastro feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }else{

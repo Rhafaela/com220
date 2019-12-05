@@ -3,6 +3,7 @@ package Controller;
 
 import Model.Corretor;
 import Model.Imovel;
+import Model.Visita;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -53,7 +54,7 @@ public class CtrlImovel {
         vet = "Código" + "t \t \t \t \t \t \t \t" + "Nome\n";
                 
         for(int i =0; i < vecAImovel.size();i++){
-            vet += vecAImovel.get(i).getCodigo()+ "\t \t \t \t \t \t \t \t" + vecAImovel.get(i).getTipo()+"\n";            
+            vet += vecAImovel.get(i).getArquivoFoto()+ "\t \t \t \t \t \t \t \t" + vecAImovel.get(i).getTipo()+"\n";            
         }
  
         return vet;        
@@ -72,11 +73,27 @@ public class CtrlImovel {
         return vecAImovel;
     } 
     
-     public  ArrayList getListaImoveis() throws Exception{
+    public  ArrayList getListaImoveis() throws Exception{
         vecAImovel = desserializeImovel();
         return vecAImovel;
     }
+    
+     public Imovel getImovelrByIndex(int pIndex){
+        return this.vecAImovel.get(pIndex);
+    }
      
+    public ArrayList getListaImoveisPorTipo(String tipo) throws Exception{
+        vecAImovel= desserializeImovel();        
+        ArrayList<Imovel> vecAImovelPorTipo = new ArrayList();                   
+        for(Imovel i : vecAImovel){
+            if(i.getTipo().equals(tipo)){
+                vecAImovelPorTipo.add(i);
+            }
+        }
+        
+        return vecAImovelPorTipo;
+    }
+    
     public boolean verificaCodigo(int cod) throws Exception{
         
         boolean possuiImovel = false;
@@ -93,5 +110,18 @@ public class CtrlImovel {
         }
                       
         return possuiImovel;
+    }
+    
+    public void agendaVisita(int cod, Visita pVis) throws Exception {
+        //
+        vecAImovel = getListaImoveis();
+        
+        for (Imovel i : vecAImovel) {
+            if(i.getCodigo() == cod){
+                i.agendaVisita(pVis);
+                break;
+            }
+        }
+        this.salvaImovel();
     }
 }
