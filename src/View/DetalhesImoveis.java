@@ -160,7 +160,37 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
 
 //        escolhas.add(tipo);
         
-//       panel.add(escolhas);         
+//       panel.add(escolhas);
+        
+        // button actions
+        this.btnAgendarVisita.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //
+                AgendarVisita av = new AgendarVisita();
+                av.setVisible(true);
+                av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+        
+        this.btnProposta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int cod;
+                cod = Integer.parseInt(codigo.getText());
+                ViewProposta vp = null;
+                try {
+                    vp = new ViewProposta(cod);
+                } catch (Exception ex) {
+                    Logger.getLogger(DetalhesImoveis.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                vp.setVisible(true);
+                vp.setSize(400, 300);
+//                vp.setResizable(false);
+                vp.setLocationRelativeTo(null);
+                vp.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
                
         
         this.add(panel);         
