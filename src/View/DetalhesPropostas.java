@@ -8,6 +8,7 @@ package View;
 import Controller.CtrlProposta;
 import Model.Imovel;
 import Model.Proposta;
+import Model.Util;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -90,20 +91,25 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         int day;
         
         boolean tempro = false;
+        boolean submetido = false;
         //System.out.println(sel);
         for(Proposta p : vecPropostas){
             if(p.getComprador().getNome().equals(sel)){                                
-                aux = p.getData();
-                ano = aux.get(Calendar.YEAR);
-                mes = aux.get(Calendar.MONTH);
-                day = aux.get(Calendar.DAY_OF_MONTH);                
-                hora.setText(day+"/"+mes+"/"+ano);
                 
-                comprador.setText(p.getComprador().getNome());
-                vendedor.setText(p.getCorretor().getNome());
-                preco.setText(Double.toString(p.getValor()));
-                estado.setText(p.getEstado());
-                
+                if(p.getEstado().equals(Util.SUBMEDITA)){
+                    aux = p.getData();
+                    ano = aux.get(Calendar.YEAR);
+                    mes = aux.get(Calendar.MONTH);
+                    day = aux.get(Calendar.DAY_OF_MONTH);                
+                    hora.setText(day+"/"+mes+"/"+ano);
+
+                    comprador.setText(p.getComprador().getNome());
+                    vendedor.setText(p.getCorretor().getNome());
+                    preco.setText(Double.toString(p.getValor()));
+                    estado.setText(p.getEstado());
+                    
+                    submetido = true;
+                }
                 tempro = true;                
             }
         }
@@ -111,34 +117,79 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         if(!tempro){
             JOptionPane.showMessageDialog(null, "Não Nome cadastrado","Atenção", JOptionPane.INFORMATION_MESSAGE);
             return;
+        }else{
+            if(submetido){
+                adicionarComponente(infos, data, 0, 0, 1, 1);
+                adicionarComponente(infos, hora, 1, 0, 1, 1);
+
+                adicionarComponente(infos, comp, 0, 1, 1, 1);
+                adicionarComponente(infos, comprador, 1, 1, 1, 1);
+
+                adicionarComponente(infos, vend, 0, 2, 1, 1);
+                adicionarComponente(infos, vendedor, 1, 2, 1, 1);
+
+                adicionarComponente(infos, price, 0, 3, 1, 1);
+                adicionarComponente(infos, preco, 1, 3, 1, 1);
+
+                adicionarComponente(infos, est, 0, 4, 1, 1);
+                adicionarComponente(infos, estado, 1, 4, 1, 1);
+
+
+                JPanel buttons = new JPanel();        
+                buttons.add(aceitar);
+                buttons.add(Recusar);
+                buttons.add(cancelar);
+
+
+
+                panel.add(new JLabel("DETALHES DA PROPSOTA", JLabel.CENTER), BorderLayout.NORTH);        
+                panel.add(infos, BorderLayout.CENTER);       
+                panel.add(buttons, BorderLayout.SOUTH);
+            }else{
+                panel.add(new JLabel("DETALHES DA PROPSOTA", JLabel.CENTER), BorderLayout.NORTH);        
+                panel.add(new JLabel("Nao possui itens a ser submetido", JLabel.CENTER), BorderLayout.CENTER);
+            }
         }
         
-        adicionarComponente(infos, data, 0, 0, 1, 1);
-        adicionarComponente(infos, hora, 1, 0, 1, 1);
+        //ACOES DOS BOTOES DE ACEITAR
+        aceitar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(Proposta p : vecPropostas){
+                    if(p.getComprador().getNome().equals(sel)){
+                        p.setEstado(Util.VENDIDO);
+                        break;
+                    }
+                }
+            }
+        });
         
-        adicionarComponente(infos, comp, 0, 1, 1, 1);
-        adicionarComponente(infos, comprador, 1, 1, 1, 1);
+        cancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(Proposta p : vecPropostas){
+                    if(p.getComprador().getNome().equals(sel)){                                
+                        p.setEstado(Util.CANCELADA);
+                        break;
+                    }
+                }
+                
+            }
+        });
         
-        adicionarComponente(infos, vend, 0, 2, 1, 1);
-        adicionarComponente(infos, vendedor, 1, 2, 1, 1);
+        aceitar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for(Proposta p : vecPropostas){
+                    if(p.getComprador().getNome().equals(sel)){                                
+                        p.setEstado(Util.VENDIDO);
+                        break;
+                    }
+                }
+            }
+        });
         
-        adicionarComponente(infos, price, 0, 3, 1, 1);
-        adicionarComponente(infos, preco, 1, 3, 1, 1);
         
-        adicionarComponente(infos, est, 0, 4, 1, 1);
-        adicionarComponente(infos, estado, 1, 4, 1, 1);
-        
-        
-        JPanel buttons = new JPanel();        
-        buttons.add(aceitar);
-        buttons.add(Recusar);
-        buttons.add(cancelar);
-        
-      
-        
-        panel.add(new JLabel("DETALHES DA PROPSOTA", JLabel.CENTER), BorderLayout.NORTH);        
-        panel.add(infos, BorderLayout.CENTER);       
-        panel.add(buttons, BorderLayout.SOUTH);
         
         this.add(panel);
     }
@@ -161,7 +212,6 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         c.gridheight = height;
         c.gridwidth = width;
         painel.add(componente, c);
-
     }
     
 }
