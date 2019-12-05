@@ -343,6 +343,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 rel4.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         }); */
+       
+       JMenuItem relatorio5 = new JMenuItem("5 - vendas por período.", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        relatorio5.setBorder(null);
+        relatorios.add(relatorio5);
+        relatorio5.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Relatorio5 rel5 = new Relatorio5();
+                rel5.setVisible(true);
+                rel5.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
         
         JMenuItem relatorio6 = new JMenuItem("6 - listagem de imóveis por vendedor.", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         relatorio6.setBorder(null);
@@ -471,17 +482,18 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                      return;
                 }    
                 
-                listaP.addListSelectionListener(new ListSelectionListener() {
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        sel = (String)listaP.getSelectedValue().toString();  
-                        auxP = sel;
-                    }
-                });
+                //listaP.addListSelectionListener(new ListSelectionListener() {
+                  //  @Override
+                    //public void valueChanged(ListSelectionEvent e) {
+                        sel = listaP.getSelectedValue().toString();
+                        System.out.println(sel);
+                        //auxP = sel;
+                    //}
+                //});
                 
                 DetalhesPropostas det = null;
                 try {
-                    det = new DetalhesPropostas(auxP);
+                    det = new DetalhesPropostas(sel);
                 } catch (Exception ex) {
                     Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                 }

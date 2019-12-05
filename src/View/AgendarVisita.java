@@ -33,8 +33,8 @@ public class AgendarVisita extends javax.swing.JFrame {
     private VisitaController visitaCtrl;
     private CompradorController compradorCtrl;
     private ControlCorretor corretorCtrl;
-    private ArrayList<Comprador> comprArr;
-    private ArrayList<Corretor> corretorArr;
+   private ArrayList<Comprador> comprArr = new ArrayList();
+    private ArrayList<Corretor> corretorArr = new ArrayList();
     private CtrlImovel imovelController;
     private Imovel imovelItem;
 
@@ -80,6 +80,8 @@ public class AgendarVisita extends javax.swing.JFrame {
         this.jComboBox2.setModel(model2);
         
         this.imovelItem= pImv;
+        
+        this.setVisible(true);
     }
 
     /**
