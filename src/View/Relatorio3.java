@@ -5,7 +5,9 @@
  */
 package View;
 
+import Controller.CtrlImovel;
 import Controller.VisitaController;
+import Model.Imovel;
 import Model.Visita;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -26,6 +28,7 @@ public class Relatorio3 extends javax.swing.JFrame {
     
     private VisitaController visController;
     private ArrayList<Visita> visArr;
+    private CtrlImovel imovelController;
 
     /**
      * Creates new form Relatorio3
@@ -34,6 +37,11 @@ public class Relatorio3 extends javax.swing.JFrame {
         initComponents();
         
         this.visController = new VisitaController();
+        try {
+            imovelController = new CtrlImovel();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
@@ -154,24 +162,42 @@ public class Relatorio3 extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Data inicial maior que data final","Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
         // get visitas
         this.visArr = this.visController.consultaPorPeriodo(cal, cal2);
+        
+        // get imoveis:
+        ArrayList<Imovel> imovArr = new ArrayList<Imovel>();
+        try {
+            imovArr = this.imovelController.getListaImoveis();
+        } catch (Exception ex) {
+            Logger.getLogger(Relatorio3.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //
+        int numImoveis = 0;
+        numImoveis = imovArr.size();
+        //
+        
         String[] dados = new String[this.visArr.size()];
         int i = 0;
-        for (i = 0; i < this.visArr.size(); i++){
-            dados[i] = this.formatRes(this.visArr.get(i));
+        for(Imovel im: imovArr){
+            for (Visita ati: im.getListaVisitas()){
+                dados[i] = this.formatRes(ati, im.getCodigo() );
+                i++;
+            }
         }
+        
         //
         this.jList1.setListData(dados);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public String formatRes(Visita v){
+    public String formatRes(Visita v, int imvCod){
         String res = "";
         String dataVis = "";
         Date date = Calendar.getInstance().getTime();  
         DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm");  
         dataVis = dateFormat.format(date);
-        res = v.getCorretor().getNome() + " - " + v.getComprador().getNome() + " - " + dataVis;
+        res = "Imóvel COD: " + imvCod + ", " + v.getCorretor().getNome() + " - " + v.getComprador().getNome() + " - " + dataVis;
         return res;
     }
 
