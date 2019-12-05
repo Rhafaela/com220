@@ -576,7 +576,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                         Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     det.setVisible(true);
-                    det.setSize(larg/2, 480);
+                    det.setSize(740, 300);
                     det.setLocationRelativeTo(null);
                     det.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 }

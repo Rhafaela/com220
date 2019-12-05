@@ -11,6 +11,9 @@ import java.awt.BorderLayout;
 import static java.awt.Color.red;
 import static java.awt.Color.white;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,10 +22,12 @@ import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 
@@ -36,17 +41,25 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
     private String op;
     private int a;
     boolean temImovel = false;
-    
+
     JPanel panel = new JPanel(new BorderLayout());
     
     JTextField codigo = new JTextField();
     JTextField tipo = new JTextField(); 
+    JTextField preco = new JTextField(); 
+    JTextArea descricao = new JTextArea(50,60);
     
     JLabel cod = new JLabel("Código");
     JLabel type = new JLabel("Tipo");
+    JLabel price = new JLabel("Preço");
+    JLabel description = new JLabel("descrição");
    
+    
+    
     JButton btnProposta = new JButton("Fazer Proposta");
     JButton btnAgendarVisita = new JButton(" Agendar Visita");
+    
+    JPanel infos = new JPanel(new GridBagLayout());
     
     String foto;
     
@@ -66,12 +79,27 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
         
         vecAImovel = imovCtrl.getListaImoveis();
 //        Imovel aux = this.imovCtrl.getImovelrByIndex(a);
+
+        codigo.setEditable(false);
+        codigo.setBorder(null);
         
+        tipo.setEditable(false);  
+        tipo.setBorder(null);
+        
+        preco.setEditable(false);
+        preco.setBorder(null);
+        
+        descricao.setEditable(false);
+        descricao.setBorder(null);
+
         for(Imovel i : vecAImovel){
             if(i.getCodigo() == a){                                
                 codigo.setText(Integer.toString(i.getCodigo()));
                 tipo.setText(i.getTipo());
-                foto = i.getArquivoFoto();
+                foto = i.getArquivoFoto();                
+                preco.setText(Double.toString(i.getPreco()));
+                descricao.setText(i.getDescricao());
+                
                 temImovel = true;
             }
         }
@@ -80,12 +108,11 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, "Não possui o codigo digitado cadastrado","Atenção", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+                        
+        JPanel imgPanel = new JPanel();        
+        ImageIcon imagem = new ImageIcon(foto);
         
-        JPanel imgPanel = new JPanel();
-        imgPanel.setBackground(red);
-//        ImageIcon imagem = new ImageIcon(getClass().getResource(foto));
-        
-        JLabel imgLabel = new JLabel("Imagem");
+        JLabel imgLabel = new JLabel(imagem);
         imgPanel.add(imgLabel);
         
 //        JPanel escolhas = new JPanel( new BorderLayout());
@@ -98,15 +125,29 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
         codigo.setPreferredSize(new Dimension(100, 30));
         System.out.println(foto);
         
-        JPanel codigoPanel = new JPanel();
-        codigoPanel.add(cod);
-        codigoPanel.add(codigo);
+//        JPanel codigoPanel = new JPanel();
+//        codigoPanel.add(cod);
+//        codigoPanel.add(codigo);
         
-        JPanel tipoPanel = new JPanel();
-        tipoPanel.add(type);
-        tipoPanel.add(tipo);
+//        JPanel tipoPanel = new JPanel();
+//        tipoPanel.add(type);
+//        tipoPanel.add(tipo);
+//        
+//        codigoPanel.add(tipoPanel);
+
+        adicionarComponente(infos, cod, 0, 0, 1, 1);
+        adicionarComponente(infos, codigo, 1, 0, 1, 1);
         
-        codigoPanel.add(tipoPanel);
+        adicionarComponente(infos, type, 0, 1, 1, 1);
+        adicionarComponente(infos, tipo, 1, 1, 1, 1);
+        
+        adicionarComponente(infos, type, 0, 2, 1, 1);
+        adicionarComponente(infos, tipo, 1, 2, 1, 1);
+        
+        adicionarComponente(infos, description, 0, 3, 1, 1);
+        adicionarComponente(infos, descricao, 1, 3, 1, 1);
+        
+        
         
         JPanel buttons = new JPanel();        
         buttons.add(btnAgendarVisita);
@@ -114,7 +155,7 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
         
         panel.add(new JLabel("DETALHES DO IMÓVEL", JLabel.CENTER), BorderLayout.NORTH);
         panel.add(imgPanel, BorderLayout.WEST);
-        panel.add(codigoPanel, BorderLayout.CENTER);       
+        panel.add(infos, BorderLayout.CENTER);       
         panel.add(buttons, BorderLayout.SOUTH);
 
 //        escolhas.add(tipo);
@@ -141,4 +182,19 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    
+    private void adicionarComponente(JPanel painel, JComponent componente,
+        int gridx, int gridy, int height, int width) {
+        GridBagConstraints c = new GridBagConstraints();
+        c.insets = new Insets(5, 5, 5, 5);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.gridx = gridx;
+        c.gridy = gridy;
+        c.gridheight = height;
+        c.gridwidth = width;
+        painel.add(componente, c);
+
+    }
 }
