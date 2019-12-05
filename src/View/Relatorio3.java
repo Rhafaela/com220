@@ -194,9 +194,8 @@ public class Relatorio3 extends javax.swing.JFrame {
     public String formatRes(Visita v, int imvCod){
         String res = "";
         String dataVis = "";
-        Date date = Calendar.getInstance().getTime();  
         DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm");  
-        dataVis = dateFormat.format(date);
+        dataVis = dateFormat.format(v.getData().getTime());
         res = "Imóvel COD: " + imvCod + ", " + v.getCorretor().getNome() + " - " + v.getComprador().getNome() + " - " + dataVis;
         return res;
     }
