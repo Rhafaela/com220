@@ -4,6 +4,7 @@ package View;
 import Controller.CompradorController;
 import Controller.ControlCorretor;
 import Controller.ControleVendedor;
+import Controller.CtrlProposta;
 import Model.Comprador;
 import Model.Corretor;
 import Model.Vendedor;
@@ -17,6 +18,8 @@ import java.util.Date;
 public class ViewProposta extends JFrame implements ActionListener{
     private ArrayList<Comprador> vecComprador = new ArrayList<>();
     private ArrayList<Corretor> vecCorretor = new ArrayList<>();
+    
+    private CtrlProposta proposta = new CtrlProposta();
     
     private CompradorController ctrolComprador = new CompradorController();
     private ControlCorretor ctrolCorretor;
@@ -40,9 +43,19 @@ public class ViewProposta extends JFrame implements ActionListener{
     
     private JPanel panel;
 
+    //Pegando tamanho em largura e altura da tela
+    Toolkit kit = Toolkit.getDefaultToolkit();  
+    Dimension tamTela = kit.getScreenSize();  
+    
+    
     public ViewProposta(int cod) throws Exception {
         this.codigo = cod;
         this.ctrolCorretor = new ControlCorretor();
+        
+//Pega largura e altura da tela 
+        int larg = tamTela.width;  
+        int alt = tamTela.height;
+        
         
         vecComprador = (ArrayList<Comprador>) this.ctrolComprador.getCompradores();
         vecCorretor =  ctrolCorretor.getListaCorretores();
@@ -110,31 +123,49 @@ public class ViewProposta extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()== b1){       
-            Double preco = Double.parseDouble(tf1.getText());
+            String preco = tf1.getText();
             String nomeComprador = tf2.getText();
-             String nomeCorretor = (String) comboBoxCorretor.getSelectedItem();
+            String nomeCorretor = (String) comboBoxCorretor.getSelectedItem();
+            Corretor cor = null;
+            boolean possuiComp = false;
             
-            for(Comprador c : vecComprador){
-                if(c.getNome().equals(nomeCorretor)){
-                    
-                }else{
-                    JButton cad;
-                    cad = new JButton();
-                    JOptionPane.showMessageDialog(null, "proposta Enviada para imovel"+cad);
-                    dispose();
-                    
-                    cad.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            
-                        }
-                    });
+            Double pre = Double.parseDouble(preco);
+            
+            //pegando o corretor
+            for(Corretor co : vecCorretor){
+                if(co.getNome().equals(nomeCorretor)){
+                    cor = co;
                 }
             }
             
+            for(Comprador c : vecComprador){
+                if(c.getNome().equals(nomeComprador)){
+                    
+                    proposta.cadProposta(hoje, c, cor, pre);
+                    JOptionPane.showMessageDialog(this, "Proposta feita com sucessos!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    dispose();    
+                    possuiComp = true;
+                    break;
+                }
+            }
             
-            JOptionPane.showMessageDialog(null, "proposta Enviada para imovel"+ codigo);
-            dispose();
+            if(!possuiComp){
+                JOptionPane.showMessageDialog(this, "Cadastre um Comprador Primeiro!","Erro", JOptionPane.ERROR_MESSAGE);
+                    dispose();
+                    
+                    int larg = tamTela.width;  
+                    int alt = tamTela.height;
+
+                    CompradorAdd cv = new CompradorAdd();
+                    cv.setVisible(true);
+                    cv.setSize(larg/2, alt/2);
+                    cv.setLocationRelativeTo(null);
+                    cv.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);  
+            }
+            
+            
+//            JOptionPane.showMessageDialog(null, "proposta Enviada para imovel"+ codigo);
+//            dispose();
         }
     }
     

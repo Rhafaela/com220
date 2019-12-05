@@ -41,6 +41,7 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
     private String op;
     private int a;
     boolean temImovel = false;
+    private Imovel imovelItem;
 
     JPanel panel = new JPanel(new BorderLayout());
     
@@ -101,6 +102,7 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
                 descricao.setText(i.getDescricao());
                 
                 temImovel = true;
+                this.imovelItem = i;
             }
         }
               
@@ -167,7 +169,7 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //
-                AgendarVisita av = new AgendarVisita();
+                AgendarVisita av = new AgendarVisita(imovelItem);
                 av.setVisible(true);
                 av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }

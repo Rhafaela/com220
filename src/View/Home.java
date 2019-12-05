@@ -4,9 +4,12 @@ package View;
 import Controller.ControlCorretor;
 import Controller.ControleVendedor;
 import Controller.CtrlImovel;
+import Controller.CtrlProposta;
 import Model.Imovel;
+import Model.Proposta;
 import Model.Util;
 import java.awt.BorderLayout;
+import java.awt.Button;
 //import com.sun.prism.image.Coords;
 
 import java.awt.CardLayout;
@@ -66,11 +69,14 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     private ControleVendedor ctrlVendedor;
     private ControlCorretor ctrlCorretor;
     private CtrlImovel ctrleImovel;
+    private CtrlProposta ctrolProposta = new CtrlProposta();
         
     //Painel na pagina inicial de Teste Leitura dos corretores
     private final JPanel painel = new JPanel(new GridBagLayout());
     JPanel tiposImoveis = new JPanel(new BorderLayout());  
+    JPanel propostasPendentes = new JPanel(new BorderLayout());
     JPanel listaImoveisPorTipo = new JPanel();
+    JPanel listaPropostas = new JPanel();
     JPanel listaImoveisPorTipoCasa = new JPanel();
     JPanel listaImoveisTipoLote = new JPanel();
     JPanel listaImoveisTipoSalaComercial = new JPanel();
@@ -83,6 +89,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     CardLayout layout;
     
     private JComboBox tiposImoveisJComboBox;
+    
+    private ArrayList<Proposta> vecProposta = new ArrayList<>();
+    
+    DefaultListModel listP = new DefaultListModel();
+    JList listaP = new JList();
+    JScrollPane scrollPaneP = new JScrollPane();
     
     //METODO CONSTRUTOR
     public Home() throws Exception{
@@ -170,12 +182,28 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         tiposImoveis.add(panelTipoImovel, BorderLayout.NORTH);
         
         
+        JButton btnMostraP = new JButton();
+        vecProposta = ctrolProposta.getListaPropostas();
+        for(Proposta p : vecProposta){
+            listP.addElement(p.getComprador().getNome());
+        }
+        listaP.setModel(listP);
+        listaP.setPreferredSize( new Dimension(400,300) );
+        scrollPaneP.setViewportView(listaP);
+        btnMostraP.setText("Detalhes");
+        
+        listaPropostas.add(scrollPaneP);
+        listaPropostas.add(btnMostraP);
+        listaPropostas.setPreferredSize(new Dimension(larg,300));
+        
+        propostasPendentes.add(listaPropostas);
         
 //Mostra resultados dos corretores (teste)
         resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
         String i = ctrleImovel.listaImoveis();
-        resultado.setText(i);
+        String p = ctrolProposta.lista();
+        resultado.setText(p);
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
 //        this.add(painel);        
 //        setLayout(new FlowLayout());
@@ -186,6 +214,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
 /**** ---------- FIM MOSTRA TESTE *-----------------------*/
      pane.add("Home", painel);  
      pane.add("Tipos", tiposImoveis);  
+     pane.add("Pendentes", propostasPendentes);
      
         
         /*------- MENU -------------*/
@@ -241,6 +270,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         proposta_pend.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         proposta_pend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/money.png")));
         menu.add(proposta_pend);
+        
+        JMenuItem listaProposta = new JMenuItem("Lista Proposta", new ImageIcon(getClass().getResource("/image/money.png")));
+        listaProposta.setPreferredSize(new java.awt.Dimension(larg/(5), 20));
+        listaProposta.setBorder(null);
+        
+        proposta_pend.add(listaProposta);
         /*Fim Menu de Propostas Pendentes*/
         
         /*Menu Editar dados cadastrados */
@@ -257,6 +292,23 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         listaVendedor.setBorder(null);
         editar.add(listaVendedor);
         /*------- FIM MENU --------*/
+        
+        // JMenu relatorios
+        JMenu relatorios = new JMenu("Relatórios");
+        relatorios.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
+        relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user_edit.png")));
+        menu.add(relatorios);
+       
+        JMenuItem relatorio3 = new JMenuItem("Relatório 3", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        relatorio3.setBorder(null);
+        relatorios.add(relatorio3);
+        relatorio3.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Relatorio3 rel3 = new Relatorio3();
+                rel3.setVisible(true);
+                rel3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
         
         
 /* --------- AÇÕES DOS MENUS ----------*/
@@ -334,6 +386,13 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             @Override
             public void actionPerformed(ActionEvent e) {
               layout.show(pane,"Tipos");
+            }
+        });
+        
+        listaProposta.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              layout.show(pane,"Pendentes");
             }
         });
       
