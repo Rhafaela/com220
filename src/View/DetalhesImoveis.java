@@ -160,7 +160,18 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
 
 //        escolhas.add(tipo);
         
-//       panel.add(escolhas);         
+//       panel.add(escolhas);
+        
+        // button actions
+        this.btnAgendarVisita.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //
+                AgendarVisita av = new AgendarVisita();
+                av.setVisible(true);
+                av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
                
         
         this.add(panel);         
