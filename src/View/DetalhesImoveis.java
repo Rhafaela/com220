@@ -169,10 +169,16 @@ public class DetalhesImoveis extends JFrame implements ActionListener{
             @Override
             public void actionPerformed(ActionEvent e) {
                 //
-                AgendarVisita av = new AgendarVisita(imovelItem);
-                System.out.println(imovelItem);
-                //av.setVisible(true);
-                //av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                AgendarVisita av;
+                try {
+                    av = new AgendarVisita(imovelItem);
+                    System.out.println(imovelItem);
+                    av.setVisible(true);
+                    av.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                } catch (Exception ex) {
+                    Logger.getLogger(DetalhesImoveis.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         });
         

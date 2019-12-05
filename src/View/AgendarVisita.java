@@ -41,7 +41,7 @@ public class AgendarVisita extends javax.swing.JFrame {
     /**
      * Creates new form AgendarVisita
      */
-    public AgendarVisita(Imovel pImv) {
+    public AgendarVisita(Imovel pImv) throws Exception {
         initComponents();
         
         visitaCtrl = new VisitaController();
@@ -69,11 +69,13 @@ public class AgendarVisita extends javax.swing.JFrame {
         this.jComboBox1.setModel(model);
         
         // corretores
-        this.corretorArr = (ArrayList<Corretor>) this.corretorCtrl.getCorretores();
+        i = 0;
+        this.corretorArr = (ArrayList<Corretor>) this.corretorCtrl.getListaCorretores();
         String[] labelsCorretor = new String[this.corretorArr.size()];
         for (i = 0; i < this.corretorArr.size(); i++) {
             labelsCorretor[i] = this.corretorArr.get(i).getNome();
         }
+        
         DefaultComboBoxModel model2 = new DefaultComboBoxModel(labelsCorretor);
         this.jComboBox2.setModel(model2);
         
