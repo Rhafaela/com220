@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -152,8 +153,21 @@ public class Relatorio3 extends javax.swing.JFrame {
             return;
         }
         // get visitas
+        this.visArr = this.visController.consultaPorPeriodo(cal, cal2);
+        String[] dados = new String[this.visArr.size()];
+        int i = 0;
+        for (i = 0; i < this.visArr.size(); i++){
+            dados[i] = this.formatRes(this.visArr.get(i));
+        }
+        //
+        this.jList1.setListData(dados);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    public String formatRes(Visita v){
+        String res = "";
+        res = v.getCorretor().getNome() + " - " + v.getComprador().getNome() + " - " + v.getData().toString();
+        return res;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
