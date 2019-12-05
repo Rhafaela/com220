@@ -64,6 +64,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     Dimension tamTela = kit.getScreenSize();  
     
      String sel;
+     String auxP;
      int aux;
     
     private ControleVendedor ctrlVendedor;
@@ -184,7 +185,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         
         JButton btnMostraP = new JButton();
         vecProposta = ctrolProposta.getListaPropostas();
-        for(Proposta p : vecProposta){
+        for(Proposta p : vecProposta){             
             listP.addElement(p.getComprador().getNome());
         }
         listaP.setModel(listP);
@@ -407,6 +408,39 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             }
         });
       
+        btnMostraP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int select = -1;
+                
+                select = listaP.getSelectedIndex();
+                
+                if(select == -1){
+                    JOptionPane.showMessageDialog(null, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
+                     return;
+                }    
+                
+                listaP.addListSelectionListener(new ListSelectionListener() {
+                    @Override
+                    public void valueChanged(ListSelectionEvent e) {
+                        sel = (String)listaP.getSelectedValue().toString();                    
+                        auxP = sel;
+                    }
+                });
+                
+                DetalhesPropostas det = null;
+                try {
+                    det = new DetalhesPropostas(auxP);
+                } catch (Exception ex) {
+                    Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                det.setVisible(true);
+                det.setSize(740, 450);
+                det.setResizable(false);
+                det.setLocationRelativeTo(null);
+                det.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
         
         //Setando o JFrame
         this.setSize(larg,alt);
