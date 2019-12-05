@@ -7,10 +7,12 @@ package View;
 
 import Controller.VisitaController;
 import Model.Visita;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -165,7 +167,11 @@ public class Relatorio3 extends javax.swing.JFrame {
 
     public String formatRes(Visita v){
         String res = "";
-        res = v.getCorretor().getNome() + " - " + v.getComprador().getNome() + " - " + v.getData().toString();
+        String dataVis = "";
+        Date date = Calendar.getInstance().getTime();  
+        DateFormat dateFormat = new SimpleDateFormat("dd/MMM/yyyy hh:mm");  
+        dataVis = dateFormat.format(date);
+        res = v.getCorretor().getNome() + " - " + v.getComprador().getNome() + " - " + dataVis;
         return res;
     }
 
