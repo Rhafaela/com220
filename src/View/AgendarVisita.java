@@ -8,6 +8,11 @@ package View;
 import Controller.CompradorController;
 import Controller.ControlCorretor;
 import Controller.VisitaController;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -139,14 +144,24 @@ public class AgendarVisita extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // SALVAR a visita
         String dateString;
+        String timeString;
         
         dateString = this.dateTimePicker1.getDatePicker().getDateStringOrEmptyString();
         System.out.println(dateString);
         
-        dateString = this.dateTimePicker1.getTimePicker().getTimeStringOrEmptyString();
-        System.out.println(dateString);
+        timeString = this.dateTimePicker1.getTimePicker().getTimeStringOrEmptyString();
+        System.out.println(timeString);
         // 2019-12-06 HH:mm
         
+        String dateAndTime = dateString + " " + timeString;
+        
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        try {
+            cal.setTime(sdf.parse(dateAndTime));
+        } catch (ParseException ex) {
+            Logger.getLogger(AgendarVisita.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
