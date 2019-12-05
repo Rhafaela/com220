@@ -8,8 +8,10 @@ package View;
 import Controller.CompradorController;
 import Controller.ControlCorretor;
 import Controller.VisitaController;
+import Model.Comprador;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,6 +26,7 @@ public class AgendarVisita extends javax.swing.JFrame {
     private VisitaController visitaCtrl;
     private CompradorController compradorCtrl;
     private ControlCorretor corretorCtrl;
+    private ArrayList<Comprador> comprArr;
 
     /**
      * Creates new form AgendarVisita
@@ -39,9 +42,9 @@ public class AgendarVisita extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
         
-        // init calendar
-        //JavaSwingCalendar calendario;
-        
+        // get compradores
+        //this.comprArr = new ArrayList<Comprador>();
+        this.comprArr = (ArrayList<Comprador>) this.compradorCtrl.getCompradores();
     }
 
     /**
@@ -68,10 +71,6 @@ public class AgendarVisita extends javax.swing.JFrame {
 
         jLabel2.setText("Selecione o corretor: ");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jButton1.setText("Salvar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,15 +95,15 @@ public class AgendarVisita extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2))
                                 .addGap(56, 56, 56)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(64, 64, 64)
@@ -162,6 +161,9 @@ public class AgendarVisita extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(AgendarVisita.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        //
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
