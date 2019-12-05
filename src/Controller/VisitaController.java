@@ -89,6 +89,17 @@ public class VisitaController {
         }
     }
     
+    public ArrayList<Visita> consultaPorPeriodo(Calendar pIni, Calendar pEnd){
+        ArrayList<Visita> tmp = new ArrayList<Visita>();
+        for(Visita el: this.visitaArr){
+            if (el.getData().getTimeInMillis() >= pIni.getTimeInMillis() 
+                    && el.getData().getTimeInMillis() <= pEnd.getTimeInMillis() ){
+                tmp.add(el);
+            }
+        }
+        return tmp;
+    }
+    
     public void editaVisita(int index, Visita pComp) throws Exception {
 //        this.visitaArr.remove(index);
         this.visitaArr.set(index, pComp);

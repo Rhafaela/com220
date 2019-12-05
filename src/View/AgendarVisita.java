@@ -7,9 +7,12 @@ package View;
 
 import Controller.CompradorController;
 import Controller.ControlCorretor;
+import Controller.CtrlImovel;
 import Controller.VisitaController;
 import Model.Comprador;
 import Model.Corretor;
+import Model.Imovel;
+import Model.Visita;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,17 +35,24 @@ public class AgendarVisita extends javax.swing.JFrame {
     private ControlCorretor corretorCtrl;
     private ArrayList<Comprador> comprArr;
     private ArrayList<Corretor> corretorArr;
+    private CtrlImovel imovelController;
+    private Imovel imovelItem;
 
     /**
      * Creates new form AgendarVisita
      */
-    public AgendarVisita() {
+    public AgendarVisita(Imovel pImv) {
         initComponents();
         
         visitaCtrl = new VisitaController();
         compradorCtrl = new CompradorController();
         try {
             corretorCtrl = new ControlCorretor();
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        try {
+            imovelController = new CtrlImovel();
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -66,6 +76,8 @@ public class AgendarVisita extends javax.swing.JFrame {
         }
         DefaultComboBoxModel model2 = new DefaultComboBoxModel(labelsCorretor);
         this.jComboBox2.setModel(model2);
+        
+        this.imovelItem= pImv;
     }
 
     /**
@@ -197,7 +209,10 @@ public class AgendarVisita extends javax.swing.JFrame {
         
         try {
             //
-            this.visitaCtrl.addVisita(cal, c, corr);
+            Visita vv = this.visitaCtrl.addVisita(cal, c, corr);
+            // try to save visita on imovel
+            this.imovelController.agendaVisita(this.imovelItem.getCodigo(), vv);
+            //
             JOptionPane.showMessageDialog(this, "Visita agendada com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.dispose();
         } catch (Exception ex) {

@@ -3,6 +3,7 @@ package Controller;
 
 import Model.Corretor;
 import Model.Imovel;
+import Model.Visita;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -109,5 +110,18 @@ public class CtrlImovel {
         }
                       
         return possuiImovel;
+    }
+    
+    public void agendaVisita(int cod, Visita pVis) throws Exception {
+        //
+        vecAImovel = getListaImoveis();
+        
+        for (Imovel i : vecAImovel) {
+            if(i.getCodigo() == cod){
+                i.agendaVisita(pVis);
+                break;
+            }
+        }
+        this.salvaImovel();
     }
 }
