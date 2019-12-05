@@ -31,7 +31,7 @@ import javax.swing.JTextField;
  */
 public class DetalhesPropostas extends JFrame implements ActionListener{
     
-    String name;
+    String name = "";
     
      private ArrayList<Proposta> vecPropostas = new ArrayList();
     
@@ -90,7 +90,7 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         int day;
         
         boolean tempro = false;
-//        System.out.println(sel);
+        System.out.println(sel);
         for(Proposta p : vecPropostas){
             if(p.getComprador().getNome().equals(sel)){                                
                 aux = p.getData();

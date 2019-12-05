@@ -82,7 +82,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     JPanel listaImoveisTipoLote = new JPanel();
     JPanel listaImoveisTipoSalaComercial = new JPanel();
     JPanel listaImoveisPropiedadeRural = new JPanel();
-    private final JTextArea resultado = new JTextArea(5, 10);
+    //private final JTextArea resultado = new JTextArea(5, 10);
     
     private final JTextArea re = new JTextArea(5,10);
     
@@ -200,12 +200,20 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         propostasPendentes.add(listaPropostas);
         
 //Mostra resultados dos corretores (teste)
-        resultado.setEditable(false);
+        /*resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
         String i = ctrleImovel.listaImoveis();
+<<<<<<< Updated upstream
         String p = ctrolProposta.lista();
         resultado.setText(p);
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
+=======
+
+        String p = ctrolProposta.lista();
+        resultado.setText(p); */
+            
+        adicionarComponente(painel, new JLabel("Bem Vindo", JLabel.CENTER) , 0, 1, 1, 1);
+
 //        this.add(painel);        
 //        setLayout(new FlowLayout());
 //        textArea = new JTextArea(5,10);
@@ -225,7 +233,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         menu.setBorder(null);
         menu.setPreferredSize(new java.awt.Dimension(56, 50));
         
+         /*Menu de Cadastros */
+        JMenu inicio = new JMenu("Home");
+        inicio.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
+        inicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/group_add.png")));
+        menu.add(inicio);
         
+        JMenuItem bemVindo = new JMenuItem("Inicio", new ImageIcon(getClass().getResource("/image/user_add.png")));
+        bemVindo.setPreferredSize(new java.awt.Dimension(larg/(5), 20));
+        bemVindo.setBorder(null);
+        
+        inicio.add(bemVindo);
         
         /*Menu de Cadastros */
         JMenu cadastro = new JMenu("Cadastrar");
@@ -433,6 +451,13 @@ public class Home extends JFrame implements ActionListener, WindowListener{
               layout.show(pane,"Pendentes");
             }
         });
+        
+        bemVindo.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              layout.show(pane,"Home");
+            }
+        });
       
         btnMostraP.addActionListener(new ActionListener() {
             @Override
@@ -449,7 +474,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 listaP.addListSelectionListener(new ListSelectionListener() {
                     @Override
                     public void valueChanged(ListSelectionEvent e) {
-                        sel = (String)listaP.getSelectedValue().toString();                    
+                        sel = (String)listaP.getSelectedValue().toString();  
                         auxP = sel;
                     }
                 });
