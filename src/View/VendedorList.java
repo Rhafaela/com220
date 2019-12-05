@@ -1,12 +1,14 @@
+package View;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
 
-import Controller.CompradorController;
-import Model.Comprador;
+
+import Controller.ControleVendedor;
+import Model.Vendedor;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -14,32 +16,32 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author john
+ * @author Anthony
  */
-public class CompradorList extends javax.swing.JFrame {
+public class VendedorList extends javax.swing.JFrame {
     
-    List<Comprador> comprLst;
-    CompradorController comprCtrl;
-    String[] comprLstStr;
+    List<Vendedor> vendLst;
+    ControleVendedor vendCtrl;
+    String[] vendLstStr;
 
     /**
-     * Creates new form CompradorList
+     * Creates new form VendedorList
      */
-    public CompradorList() {
+    public VendedorList() {
         this.initComponents();
         //
-        this.comprCtrl = new CompradorController();
-        this.comprLst = new ArrayList<Comprador>();
-        // get the list from CompradorController
-        this.comprLst = this.comprCtrl.getCompradores();
-        this.comprLstStr = this.comprCtrl.getCompradoresStringList();
-        this.jList1.setListData(this.comprLstStr);
+        this.vendCtrl = new ControleVendedor();
+        this.vendLst = new ArrayList<Vendedor>();
+        // get the list from VendedorContol
+        this.vendLst = this.vendCtrl.getVendedores();
+        this.vendLstStr = this.vendCtrl.getVendedoresStringList();
+        this.jList1.setListData(this.vendLstStr);
         //
     }
     
     public void refreshVars(){
-        this.comprLstStr = this.comprCtrl.getCompradoresStringList();
-        this.jList1.setListData(this.comprLstStr);
+        this.vendLstStr = this.vendCtrl.getVendedoresStringList();
+        this.jList1.setListData(this.vendLstStr);
     }
 
     /**
@@ -117,7 +119,7 @@ public class CompradorList extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        CompradorEdit ce = new CompradorEdit(sel);
+        VendedorEdit ce = new VendedorEdit(sel);
         ce.setVisible(true);
 //        ce.setSize(larg/2, alt/2);
 //        ce.setLocationRelativeTo(null);
@@ -133,7 +135,7 @@ public class CompradorList extends javax.swing.JFrame {
             return;
         }
         try {
-            this.comprCtrl.removeComprador(sel);
+            this.vendCtrl.removeVendedor(sel);
             JOptionPane.showMessageDialog(this, "Removido com sucesso","Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.refreshVars();
         } catch (Exception e){

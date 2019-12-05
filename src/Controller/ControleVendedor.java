@@ -1,10 +1,10 @@
+
 /*
 teste commit
  */
 package Controller;
 
-import Model.Comprador;
-import java.io.EOFException;
+import Model.Vendedor;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,18 +17,18 @@ import java.util.List;
 
 /**
  *
- * @author Rhafaela
- * 
+ * @author Anthony
+ *
  */
-public class CompradorController {
-    
-    String nomeDoArquivo = "compradores.dat";
-    Comprador c1 = new Comprador("", "", "", "", "");
-    private ArrayList<Comprador> comprArr;
-    
-    public CompradorController(){
-        this.comprArr = new ArrayList<Comprador>();
-        //c1 = new Comprador();
+public class ControleVendedor {
+
+    String nomeDoArquivo = "vendedores.dat";
+    Vendedor v1 = new Vendedor("", "", "", "", "");
+    private ArrayList<Vendedor> vendArr;
+
+    public ControleVendedor() {
+        this.vendArr = new ArrayList<Vendedor>();
+        //v1 = new Vendedor();
         try {
             this.lerDoArquivo();
             int a = 0;
@@ -37,11 +37,12 @@ public class CompradorController {
             System.out.println("Could not read compradores.dat");
         }
     }
-    
-    public Comprador addComprador(String pCpf, String pNome, 
+
+
+      public Vendedor addVendedor(String pCpf, String pNome,
             String pEmail, String pFone, String pContatoPref) throws Exception {
-        c1 = new Comprador(pCpf, pNome, pEmail, pFone, pContatoPref);
-        comprArr.add(c1);
+        v1 = new Vendedor(pCpf, pNome, pEmail, pFone, pContatoPref);
+        vendArr.add(v1);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
@@ -49,36 +50,37 @@ public class CompradorController {
             System.out.println(e.getMessage() + "\n");
             throw new Exception("Erro ao salvar.");
         }
-        return c1;
+        return v1;
     }
-    
-    public Comprador getCompradorByIndex(int pIndex){
-        return this.comprArr.get(pIndex);
+
+    public Vendedor getVendedorByIndex(int pIndex) {
+        return this.vendArr.get(pIndex);
     }
-    
-    public List<Comprador> getCompradores(){
+
+    public List<Vendedor> getVendedores() {
         //
-        return this.comprArr;
+        return this.vendArr;
     }
-    
-    public String[] getCompradoresStringList(){
-        String[] lst = new String[this.comprArr.size()];
+
+    public String[] getVendedoresStringList() {
+        String[] lst = new String[this.vendArr.size()];
         int i = 0;
-        for (i = 0; i < this.comprArr.size(); i++){
-            lst[i] = this.returnCompradorStr(this.comprArr.get(i));
+        for (i = 0; i < this.vendArr.size(); i++) {
+            lst[i] = this.returnVendedorStr(this.vendArr.get(i));
+            
         }
         return lst;
     }
-    
-    public String returnCompradorStr(Comprador pCom){
+
+    public String returnVendedorStr(Vendedor pVend) {
         String res = "";
-        res = pCom.getCpf() + " - " + pCom.getNome() + " - " 
-                + pCom.getFone() + " - " + pCom.getContatoPref() + "\n";
+        res = pVend.getCpf() + " - " + pVend.getNome() + " - "
+                + pVend.getFone() + " - " + pVend.getContatoPref() + "\n";
         return res;
     }
-    
-    public void removeComprador(int pIndex) throws Exception {
-        this.comprArr.remove(pIndex);
+
+    public void removeVendedor(int pIndex) throws Exception {
+        this.vendArr.remove(pIndex);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
@@ -86,11 +88,11 @@ public class CompradorController {
             throw new Exception("Erro ao salvar.");
         }
     }
-    
-    public void editaComprador(int index, Comprador pComp) throws Exception {
-//        this.comprArr.remove(index);
-        this.comprArr.set(index, pComp);
-//        this.comprArr.add(pComp);
+
+    public void editaVendedor(int index, Vendedor pVend) throws Exception {
+//        this.vendArr.remove(index);
+        this.vendArr.set(index, pVend);
+//        this.vendArr.add(pvend);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
@@ -98,50 +100,44 @@ public class CompradorController {
             throw new Exception("Erro ao editar.");
         }
     }
-    
+
     public void salvarNoArquivo() throws Exception {
         try {
             FileOutputStream f = new FileOutputStream(new File(nomeDoArquivo));
             ObjectOutputStream o = new ObjectOutputStream(f);
 
             // Write objects to file
-            o.writeObject(this.comprArr);
+            o.writeObject(this.vendArr);
 
             o.close();
             f.close();
 
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("Error initializing stream");
         }
-        
+
         return;
     }
-    
+
     public void lerDoArquivo() throws Exception {
-        // le do arquivo os compradores
+        // le do arquivo os Vendedores
         File objFile = new File(this.nomeDoArquivo);
         if (objFile.exists()) {
             FileInputStream objFileIS = new FileInputStream(this.nomeDoArquivo);
             try (ObjectInputStream objIS = new ObjectInputStream(objFileIS)) {
-                this.comprArr = (ArrayList<Comprador>) objIS.readObject();
+                this.vendArr = (ArrayList<Vendedor>) objIS.readObject();
                 objIS.close();
             }
         }
         return;
     }
-    
-    
-    //
-    public void addTipoImovel(String tipoImovel) throws Exception {
-        c1.addTipoImovel(tipoImovel);
-    }
 
-    public boolean removeTipoImovel(String tipoImovel) throws Exception {
-        boolean res = c1.removeTipoImovel(tipoImovel);
-        return res;
+    //
+
+    public void cadVendedor(String cpf, String nome, String email, String fone, String contatoPref) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
 }
+

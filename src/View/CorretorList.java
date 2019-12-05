@@ -1,45 +1,57 @@
+package View;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package View;
 
-import Controller.CompradorController;
-import Model.Comprador;
+
+import Controller.ControlCorretor;
+import Model.Corretor;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author john
+ * @author Anthony
  */
-public class CompradorList extends javax.swing.JFrame {
+public class CorretorList extends javax.swing.JFrame {
     
-    List<Comprador> comprLst;
-    CompradorController comprCtrl;
-    String[] comprLstStr;
+    List<Corretor> corretLst = new ArrayList();
+    ControlCorretor corretCtrl;
+    String[] corretLstStr;
 
     /**
-     * Creates new form CompradorList
+     * Creates new form CorretorList
      */
-    public CompradorList() {
+    public CorretorList() {
         this.initComponents();
-        //
-        this.comprCtrl = new CompradorController();
-        this.comprLst = new ArrayList<Comprador>();
-        // get the list from CompradorController
-        this.comprLst = this.comprCtrl.getCompradores();
-        this.comprLstStr = this.comprCtrl.getCompradoresStringList();
-        this.jList1.setListData(this.comprLstStr);
+        try {
+            //
+            this.corretCtrl = new ControlCorretor();
+        } catch (Exception ex) {
+            Logger.getLogger(CorretorList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.corretLst = new ArrayList<Corretor>();
+        try {
+            // get the list from ControlCorretor
+            this.corretLst = this.corretCtrl.getListaCorretores(); 
+        } catch (Exception ex) {
+            Logger.getLogger(CorretorList.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        this.corretLstStr = this.corretCtrl.getCorretoresStringList(); 
+        this.jList1.setListData(this.corretLstStr);
         //
     }
     
     public void refreshVars(){
-        this.comprLstStr = this.comprCtrl.getCompradoresStringList();
-        this.jList1.setListData(this.comprLstStr);
+        this.corretLstStr = this.corretCtrl.getCorretoresStringList(); 
+        this.jList1.setListData(this.corretLstStr);
     }
 
     /**
@@ -111,16 +123,16 @@ public class CompradorList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int sel = -1;
-        sel = this.jList1.getSelectedIndex();
-        if (sel == -1){
+        int selc = -1;
+        selc = this.jList1.getSelectedIndex();
+        if (selc == -1){
             JOptionPane.showMessageDialog(this, "É necessário selecionar um item antes","Atenção", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        CompradorEdit ce = new CompradorEdit(sel);
+        CorretorEdit ce = new CorretorEdit(selc);
         ce.setVisible(true);
-//        ce.setSize(larg/2, alt/2);
-//        ce.setLocationRelativeTo(null);
+  //      ce.setSize(larg/2, alt/2);
+  //      ce.setLocationRelativeTo(null);
         ce.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -133,12 +145,11 @@ public class CompradorList extends javax.swing.JFrame {
             return;
         }
         try {
-            this.comprCtrl.removeComprador(sel);
+//            this.corretCtrl.removeCorretor(sel); //esse metodo nao existe no controlador
             JOptionPane.showMessageDialog(this, "Removido com sucesso","Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.refreshVars();
         } catch (Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage(),"Erro", JOptionPane.ERROR_MESSAGE);
-            return;
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -172,7 +183,7 @@ public class CompradorList extends javax.swing.JFrame {
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new CompradorList().setVisible(true);
+//                new CorretorList().setVisible(true);
 //            }
 //        });
 //    }
@@ -184,3 +195,5 @@ public class CompradorList extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
+
+

@@ -1,8 +1,9 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Imovel {
+public class Imovel implements Serializable{
 
     private int codigo;
     private String tipo;
@@ -11,13 +12,14 @@ public class Imovel {
     private String estado;
     private double preco;
     private double comissao;
-    private Calendar dataInclusao;
-    private Vendedor vendedor;
+    //private Calendar dataInclusao;
+    //private Vendedor vendedor;
+    private String dataInclusao;
+    private String vendedor;
     private ArrayList<Visita> listaVisitas = new ArrayList();
     private ArrayList<Proposta> listaPropostas = new ArrayList();
 
-    public Imovel(int codigo, String tipo, String descricao, String arquivoFoto,
-            double preco, double comissao, Calendar dataInclusao, Vendedor vendedor) {
+    public Imovel(int codigo, String tipo, String descricao, String arquivoFoto, double preco, double comissao, String vendedor) {
         this.codigo = codigo;
         this.tipo = tipo;
         this.descricao = descricao;
@@ -26,7 +28,7 @@ public class Imovel {
         this.comissao = comissao;
         this.dataInclusao = dataInclusao;
         this.vendedor = vendedor;
-        this.estado = Util.ATIVO;
+        this.estado = Util.ATIVO;      
     }
 
     public void addArquivoFoto(String arquivoFoto){
@@ -108,11 +110,11 @@ public class Imovel {
         return comissao;
     }
 
-    public Calendar getDataInclusao() {
+    public String getDataInclusao() {
         return dataInclusao;
     }
 
-    public Vendedor getVendedor() {
+    public String getVendedor() {
         return vendedor;
     }
 

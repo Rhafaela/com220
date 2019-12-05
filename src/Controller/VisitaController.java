@@ -1,10 +1,13 @@
 /*
-teste commit
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package Controller;
 
 import Model.Comprador;
-import java.io.EOFException;
+import Model.Corretor;
+import Model.Visita;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,35 +16,33 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
  *
- * @author Rhafaela
- * 
+ * @author john
  */
-public class CompradorController {
+public class VisitaController {
+    String nomeDoArquivo = "visitas.dat";
+    Visita c1;
+    private ArrayList<Visita> visitaArr;
     
-    String nomeDoArquivo = "compradores.dat";
-    Comprador c1 = new Comprador("", "", "", "", "");
-    private ArrayList<Comprador> comprArr;
-    
-    public CompradorController(){
-        this.comprArr = new ArrayList<Comprador>();
-        //c1 = new Comprador();
+    public VisitaController(){
+        this.visitaArr = new ArrayList<Visita>();
+        //c1 = new Visita();
         try {
             this.lerDoArquivo();
             int a = 0;
         } catch (Exception e) {
             // could not read file
-            System.out.println("Could not read compradores.dat");
+            System.out.println("Could not read visitas.dat");
         }
     }
     
-    public Comprador addComprador(String pCpf, String pNome, 
-            String pEmail, String pFone, String pContatoPref) throws Exception {
-        c1 = new Comprador(pCpf, pNome, pEmail, pFone, pContatoPref);
-        comprArr.add(c1);
+    public Visita addVisita(Calendar pData, Comprador pCompr, Corretor pCorr) throws Exception {
+        c1 = new Visita(pData, pCompr, pCorr);
+        visitaArr.add(c1);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
@@ -52,33 +53,34 @@ public class CompradorController {
         return c1;
     }
     
-    public Comprador getCompradorByIndex(int pIndex){
-        return this.comprArr.get(pIndex);
+    public Visita getVisitaByIndex(int pIndex){
+        return this.visitaArr.get(pIndex);
     }
     
-    public List<Comprador> getCompradores(){
+    public List<Visita> getVisitas(){
         //
-        return this.comprArr;
+        return this.visitaArr;
     }
     
-    public String[] getCompradoresStringList(){
-        String[] lst = new String[this.comprArr.size()];
+    public String[] getVisitasStringList(){
+        String[] lst = new String[this.visitaArr.size()];
         int i = 0;
-        for (i = 0; i < this.comprArr.size(); i++){
-            lst[i] = this.returnCompradorStr(this.comprArr.get(i));
+        for (i = 0; i < this.visitaArr.size(); i++){
+            lst[i] = this.returnVisitaStr(this.visitaArr.get(i));
         }
         return lst;
     }
     
-    public String returnCompradorStr(Comprador pCom){
+    public String returnVisitaStr(Visita pCom){
         String res = "";
-        res = pCom.getCpf() + " - " + pCom.getNome() + " - " 
-                + pCom.getFone() + " - " + pCom.getContatoPref() + "\n";
+        res = pCom.getData().toString() + " - " 
+                + pCom.getComprador().getNome() + " - "
+                + pCom.getCorretor().getNome() + "\n";
         return res;
     }
     
-    public void removeComprador(int pIndex) throws Exception {
-        this.comprArr.remove(pIndex);
+    public void removeVisita(int pIndex) throws Exception {
+        this.visitaArr.remove(pIndex);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
@@ -87,10 +89,21 @@ public class CompradorController {
         }
     }
     
-    public void editaComprador(int index, Comprador pComp) throws Exception {
-//        this.comprArr.remove(index);
-        this.comprArr.set(index, pComp);
-//        this.comprArr.add(pComp);
+    public ArrayList<Visita> consultaPorPeriodo(Calendar pIni, Calendar pEnd){
+        ArrayList<Visita> tmp = new ArrayList<Visita>();
+        for(Visita el: this.visitaArr){
+            if (el.getData().getTimeInMillis() >= pIni.getTimeInMillis() 
+                    && el.getData().getTimeInMillis() <= pEnd.getTimeInMillis() ){
+                tmp.add(el);
+            }
+        }
+        return tmp;
+    }
+    
+    public void editaVisita(int index, Visita pComp) throws Exception {
+//        this.visitaArr.remove(index);
+        this.visitaArr.set(index, pComp);
+//        this.visitaArr.add(pComp);
         try {
             this.salvarNoArquivo();
         } catch (Exception e) {
@@ -105,7 +118,7 @@ public class CompradorController {
             ObjectOutputStream o = new ObjectOutputStream(f);
 
             // Write objects to file
-            o.writeObject(this.comprArr);
+            o.writeObject(this.visitaArr);
 
             o.close();
             f.close();
@@ -125,23 +138,10 @@ public class CompradorController {
         if (objFile.exists()) {
             FileInputStream objFileIS = new FileInputStream(this.nomeDoArquivo);
             try (ObjectInputStream objIS = new ObjectInputStream(objFileIS)) {
-                this.comprArr = (ArrayList<Comprador>) objIS.readObject();
+                this.visitaArr = (ArrayList<Visita>) objIS.readObject();
                 objIS.close();
             }
         }
         return;
     }
-    
-    
-    //
-    public void addTipoImovel(String tipoImovel) throws Exception {
-        c1.addTipoImovel(tipoImovel);
-    }
-
-    public boolean removeTipoImovel(String tipoImovel) throws Exception {
-        boolean res = c1.removeTipoImovel(tipoImovel);
-        return res;
-    }
-    
-    
 }

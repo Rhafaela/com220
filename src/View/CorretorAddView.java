@@ -6,6 +6,7 @@
 package View;
 
 import Controller.ControlCorretor;
+import Controller.ValidarCPF;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -127,9 +128,15 @@ public class CorretorAddView extends JFrame implements ActionListener{
             String creci = tfcreci.getText();
             Double porcentagem = Double.parseDouble(tfPctVenda.getText());
             
-            controle.cadCorretor(cpf, nome, email, fone, creci, porcentagem);
-            JOptionPane.showMessageDialog(this, "Cadastro feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            this.dispose();
+            if(ValidarCPF.isCPF(cpf) == true){
+                controle.cadCorretor(cpf, porcentagem, nome, email, fone, creci);
+                JOptionPane.showMessageDialog(this, "Cadastro feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "CPF digitado nao eh valido!","Erro", JOptionPane.ERROR_MESSAGE);
+                this.dispose();
+            }
+            
         }catch (NumberFormatException exc) {
             JOptionPane.showMessageDialog(this, "Erro na entrada de parâmetros!", "Erro", JOptionPane.ERROR_MESSAGE);
         } catch (Exception exc) {
