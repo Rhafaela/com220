@@ -89,7 +89,7 @@ public class VisitaController {
         }
     }
     
-    public void editaComprador(int index, Visita pComp) throws Exception {
+    public void editaVisita(int index, Visita pComp) throws Exception {
 //        this.visitaArr.remove(index);
         this.visitaArr.set(index, pComp);
 //        this.visitaArr.add(pComp);

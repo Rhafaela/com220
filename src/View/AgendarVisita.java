@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -166,10 +167,10 @@ public class AgendarVisita extends javax.swing.JFrame {
         String timeString;
         
         dateString = this.dateTimePicker1.getDatePicker().getDateStringOrEmptyString();
-        System.out.println(dateString);
+        //System.out.println(dateString);
         
         timeString = this.dateTimePicker1.getTimePicker().getTimeStringOrEmptyString();
-        System.out.println(timeString);
+        //System.out.println(timeString);
         // 2019-12-06 HH:mm
         
         String dateAndTime = dateString + " " + timeString;
@@ -183,7 +184,25 @@ public class AgendarVisita extends javax.swing.JFrame {
         }
         
         //
+        // get which comprador is selected
+        int i = 0;
+        int idx = this.jComboBox1.getSelectedIndex();
+        Comprador c;
+        c = this.comprArr.get(idx);
         
+        // get corretor
+        idx = this.jComboBox2.getSelectedIndex();
+        Corretor corr;
+        corr = this.corretorArr.get(idx);
+        
+        try {
+            //
+            this.visitaCtrl.addVisita(cal, c, corr);
+            JOptionPane.showMessageDialog(this, "Visita agendada com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao salvar Visita ao imóvel","Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
