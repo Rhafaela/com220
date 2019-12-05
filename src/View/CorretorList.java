@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class CorretorList extends javax.swing.JFrame {
     
-    List<Corretor> corretLst;
+    List<Corretor> corretLst = new ArrayList();
     ControlCorretor corretCtrl;
     String[] corretLstStr;
 

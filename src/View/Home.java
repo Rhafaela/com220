@@ -471,17 +471,18 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                      return;
                 }    
                 
-                listaP.addListSelectionListener(new ListSelectionListener() {
-                    @Override
-                    public void valueChanged(ListSelectionEvent e) {
-                        sel = (String)listaP.getSelectedValue().toString();  
-                        auxP = sel;
-                    }
-                });
+                //listaP.addListSelectionListener(new ListSelectionListener() {
+                  //  @Override
+                    //public void valueChanged(ListSelectionEvent e) {
+                        sel = listaP.getSelectedValue().toString();
+                        System.out.println(sel);
+                        //auxP = sel;
+                    //}
+                //});
                 
                 DetalhesPropostas det = null;
                 try {
-                    det = new DetalhesPropostas(auxP);
+                    det = new DetalhesPropostas(sel);
                 } catch (Exception ex) {
                     Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
                 }

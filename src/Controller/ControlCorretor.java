@@ -13,7 +13,7 @@ public class ControlCorretor {
     private Corretor objACorretorEntidade;
     private String[] dadosForm;
     private ArrayList<Corretor> vecACorretor = new ArrayList();
-    private ArrayList<Corretor> corretArr;
+   private ArrayList<Corretor> corretArr= new ArrayList();
 
     public ControlCorretor() throws Exception {
         desserializeCorretor();

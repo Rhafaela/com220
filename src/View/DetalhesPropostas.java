@@ -64,7 +64,7 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
     Calendar aux;
     
     DetalhesPropostas(String sel) throws Exception {
-        this.name = sel;
+        super(sel);
         
         crtlProp = new CtrlProposta();
         
@@ -90,7 +90,7 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         int day;
         
         boolean tempro = false;
-        System.out.println(sel);
+        //System.out.println(sel);
         for(Proposta p : vecPropostas){
             if(p.getComprador().getNome().equals(sel)){                                
                 aux = p.getData();
@@ -125,7 +125,7 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         adicionarComponente(infos, price, 0, 3, 1, 1);
         adicionarComponente(infos, preco, 1, 3, 1, 1);
         
-        adicionarComponente(infos, estado, 0, 4, 1, 1);
+        adicionarComponente(infos, est, 0, 4, 1, 1);
         adicionarComponente(infos, estado, 1, 4, 1, 1);
         
         
@@ -134,9 +134,13 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
         buttons.add(Recusar);
         buttons.add(cancelar);
         
+      
+        
         panel.add(new JLabel("DETALHES DA PROPSOTA", JLabel.CENTER), BorderLayout.NORTH);        
         panel.add(infos, BorderLayout.CENTER);       
         panel.add(buttons, BorderLayout.SOUTH);
+        
+        this.add(panel);
     }
 
     @Override
@@ -148,7 +152,7 @@ public class DetalhesPropostas extends JFrame implements ActionListener{
     private void adicionarComponente(JPanel painel, JComponent componente,
         int gridx, int gridy, int height, int width) {
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(15, 15, 15, 15);
+        c.insets = new Insets( 9, 9, 9, 9);
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
