@@ -74,8 +74,6 @@ public class VendedorEdit extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel6.setText("jLabel6");
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Email", "Telefone", "Whatsapp" }));
 
         jButton2.setText("Cancelar");
