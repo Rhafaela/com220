@@ -138,6 +138,14 @@ public class AgendarVisita extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // SALVAR a visita
+        String dateString;
+        
+        dateString = this.dateTimePicker1.getDatePicker().getDateStringOrEmptyString();
+        System.out.println(dateString);
+        
+        dateString = this.dateTimePicker1.getDatePicker().getText();
+        System.out.println(dateString);
+        // 2019-12-06
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
