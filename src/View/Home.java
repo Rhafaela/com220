@@ -333,7 +333,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             }
         });
          
-       /* JMenuItem relatorio4 = new JMenuItem("Relatório 4", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+       /* JMenuItem relatorio4 = new JMenuItem("4 - eventos por imovel por periodo.", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         relatorio4.setBorder(null);
         relatorios.add(relatorio4);
         relatorio4.addActionListener(new ActionListener(){
