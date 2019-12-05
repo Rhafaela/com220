@@ -11,6 +11,7 @@ public class Corretor extends Pessoa implements Serializable{
         this.creci = creci;
         this.percCorretagem = percCorretagem;
    }
+
        
     public void setPercCorretagem(double percCorretagem) {
         this.percCorretagem = percCorretagem;
