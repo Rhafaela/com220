@@ -9,12 +9,15 @@ import Controller.CompradorController;
 import Controller.ControlCorretor;
 import Controller.VisitaController;
 import Model.Comprador;
+import Model.Corretor;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 /**
@@ -27,6 +30,7 @@ public class AgendarVisita extends javax.swing.JFrame {
     private CompradorController compradorCtrl;
     private ControlCorretor corretorCtrl;
     private ArrayList<Comprador> comprArr;
+    private ArrayList<Corretor> corretorArr;
 
     /**
      * Creates new form AgendarVisita
@@ -45,6 +49,16 @@ public class AgendarVisita extends javax.swing.JFrame {
         // get compradores
         //this.comprArr = new ArrayList<Comprador>();
         this.comprArr = (ArrayList<Comprador>) this.compradorCtrl.getCompradores();
+        String[] labelsComprador = new String[this.comprArr.size()];
+        int i = 0;
+        for (i = 0; i < this.comprArr.size(); i++) {
+            labelsComprador[i] = this.comprArr.get(i).getNome();
+        }
+        DefaultComboBoxModel model = new DefaultComboBoxModel(labelsComprador);
+        this.jComboBox1.setModel(model);
+        
+        // corretores
+        this.corretorArr = (ArrayList<Corretor>) this.corretorCtrl.getCorretores();
     }
 
     /**
