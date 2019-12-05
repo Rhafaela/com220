@@ -87,4 +87,9 @@ public class ControlCorretor {
      public void finalize() throws Exception {
 //        serializaCorretor();
     }
+     
+     public List<Corretor> getCorretores(){
+        //
+        return this.vecACorretor;
+    }
 }
