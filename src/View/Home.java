@@ -275,6 +275,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             }
         });
         
+        JMenuItem relatorio6 = new JMenuItem("Relatório 6", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        relatorio6.setBorder(null);
+        relatorios.add(relatorio6);
+        relatorio6.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Relatorio6 rel6 = new Relatorio6();
+                rel6.setVisible(true);
+                rel6.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+        
         
 /* --------- AÇÕES DOS MENUS ----------*/
         
