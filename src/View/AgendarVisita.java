@@ -59,6 +59,12 @@ public class AgendarVisita extends javax.swing.JFrame {
         
         // corretores
         this.corretorArr = (ArrayList<Corretor>) this.corretorCtrl.getCorretores();
+        String[] labelsCorretor = new String[this.corretorArr.size()];
+        for (i = 0; i < this.corretorArr.size(); i++) {
+            labelsCorretor[i] = this.corretorArr.get(i).getNome();
+        }
+        DefaultComboBoxModel model2 = new DefaultComboBoxModel(labelsCorretor);
+        this.jComboBox2.setModel(model2);
     }
 
     /**
