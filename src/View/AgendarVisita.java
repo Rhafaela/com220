@@ -143,9 +143,10 @@ public class AgendarVisita extends javax.swing.JFrame {
         dateString = this.dateTimePicker1.getDatePicker().getDateStringOrEmptyString();
         System.out.println(dateString);
         
-        dateString = this.dateTimePicker1.getDatePicker().getText();
+        dateString = this.dateTimePicker1.getTimePicker().getTimeStringOrEmptyString();
         System.out.println(dateString);
-        // 2019-12-06
+        // 2019-12-06 HH:mm
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
