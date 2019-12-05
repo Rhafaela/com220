@@ -577,6 +577,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                     }
                     det.setVisible(true);
                     det.setSize(740, 300);
+                    det.setResizable(false);
                     det.setLocationRelativeTo(null);
                     det.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 }
