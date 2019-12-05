@@ -100,7 +100,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     //METODO CONSTRUTOR
     public Home() throws Exception{
        
-        super("Sistema de vendas");
+        super("Sistema de vendas - Imobiliária ItaHouse");
         
         //Pega largura e altura da tela 
         int larg = tamTela.width;  
@@ -203,8 +203,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
         String i = ctrleImovel.listaImoveis();
+<<<<<<< HEAD
+        resultado.setText(c);
+=======
         String p = ctrolProposta.lista();
         resultado.setText(p);
+>>>>>>> d92c27b59e6890ae82f8284b5b77f529a0cb4155
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
 //        this.add(painel);        
 //        setLayout(new FlowLayout());
@@ -292,15 +296,19 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         JMenuItem listaVendedor = new JMenuItem("Vendedores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         listaVendedor.setBorder(null);
         editar.add(listaVendedor);
+        
+        JMenuItem listaCorretor = new JMenuItem("corretores", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        listaCorretor.setBorder(null);
+        editar.add(listaCorretor);
         /*------- FIM MENU --------*/
         
-        // JMenu relatorios
+        // JMenu relatorios 
         JMenu relatorios = new JMenu("Relatórios");
         relatorios.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         relatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user_edit.png")));
         menu.add(relatorios);
        
-        JMenuItem relatorio3 = new JMenuItem("Relatório 3", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        JMenuItem relatorio3 = new JMenuItem("3 - visitas por corretor por período.", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         relatorio3.setBorder(null);
         relatorios.add(relatorio3);
         relatorio3.addActionListener(new ActionListener(){
@@ -310,8 +318,19 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 rel3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
+         
+       /* JMenuItem relatorio4 = new JMenuItem("Relatório 4", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        relatorio4.setBorder(null);
+        relatorios.add(relatorio4);
+        relatorio4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Relatorio4 rel4 = new Relatorio4();
+                rel4.setVisible(true);
+                rel4.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        }); */
         
-        JMenuItem relatorio6 = new JMenuItem("Relatório 6", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        JMenuItem relatorio6 = new JMenuItem("6 - listagem de imóveis por vendedor.", new ImageIcon(getClass().getResource("/image/user_gray.png")));
         relatorio6.setBorder(null);
         relatorios.add(relatorio6);
         relatorio6.addActionListener(new ActionListener(){
@@ -391,6 +410,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                cl.setSize(larg/2, alt/2);
                cl.setLocationRelativeTo(null);
                cl.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+        
+        listaCorretor.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               CorretorList co = new CorretorList();
+               co.setVisible(true);
+               co.setSize(larg/2, alt/2);
+               co.setLocationRelativeTo(null);
+               co.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
         

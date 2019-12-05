@@ -129,7 +129,7 @@ public class CorretorAddView extends JFrame implements ActionListener{
             Double porcentagem = Double.parseDouble(tfPctVenda.getText());
             
             if(ValidarCPF.isCPF(cpf) == true){
-                controle.cadCorretor(cpf, nome, email, fone, creci, porcentagem);
+                controle.cadCorretor(cpf, porcentagem, nome, email, fone, creci);
                 JOptionPane.showMessageDialog(this, "Cadastro feito com êxito!","Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             }else{
