@@ -4,9 +4,12 @@ package View;
 import Controller.ControlCorretor;
 import Controller.ControleVendedor;
 import Controller.CtrlImovel;
+import Controller.CtrlProposta;
 import Model.Imovel;
+import Model.Proposta;
 import Model.Util;
 import java.awt.BorderLayout;
+import java.awt.Button;
 //import com.sun.prism.image.Coords;
 
 import java.awt.CardLayout;
@@ -66,11 +69,14 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     private ControleVendedor ctrlVendedor;
     private ControlCorretor ctrlCorretor;
     private CtrlImovel ctrleImovel;
+    private CtrlProposta ctrolProposta = new CtrlProposta();
         
     //Painel na pagina inicial de Teste Leitura dos corretores
     private final JPanel painel = new JPanel(new GridBagLayout());
     JPanel tiposImoveis = new JPanel(new BorderLayout());  
+    JPanel propostasPendentes = new JPanel(new BorderLayout());
     JPanel listaImoveisPorTipo = new JPanel();
+    JPanel listaPropostas = new JPanel();
     JPanel listaImoveisPorTipoCasa = new JPanel();
     JPanel listaImoveisTipoLote = new JPanel();
     JPanel listaImoveisTipoSalaComercial = new JPanel();
@@ -83,6 +89,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
     CardLayout layout;
     
     private JComboBox tiposImoveisJComboBox;
+    
+    private ArrayList<Proposta> vecProposta = new ArrayList<>();
+    
+    DefaultListModel listP = new DefaultListModel();
+    JList listaP = new JList();
+    JScrollPane scrollPaneP = new JScrollPane();
     
     //METODO CONSTRUTOR
     public Home() throws Exception{
@@ -170,12 +182,32 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         tiposImoveis.add(panelTipoImovel, BorderLayout.NORTH);
         
         
+        JButton btnMostraP = new JButton();
+        vecProposta = ctrolProposta.getListaPropostas();
+        for(Proposta p : vecProposta){
+            listP.addElement(p.getComprador().getNome());
+        }
+        listaP.setModel(listP);
+        listaP.setPreferredSize( new Dimension(400,300) );
+        scrollPaneP.setViewportView(listaP);
+        btnMostraP.setText("Detalhes");
+        
+        listaPropostas.add(scrollPaneP);
+        listaPropostas.add(btnMostraP);
+        listaPropostas.setPreferredSize(new Dimension(larg,300));
+        
+        propostasPendentes.add(listaPropostas);
         
 //Mostra resultados dos corretores (teste)
         resultado.setEditable(false);
         String c = ctrlCorretor.listaCorretores();
         String i = ctrleImovel.listaImoveis();
+<<<<<<< HEAD
         resultado.setText(c);
+=======
+        String p = ctrolProposta.lista();
+        resultado.setText(p);
+>>>>>>> d92c27b59e6890ae82f8284b5b77f529a0cb4155
         adicionarComponente(painel, resultado, 0, 1, 1, 1);
 //        this.add(painel);        
 //        setLayout(new FlowLayout());
@@ -186,6 +218,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
 /**** ---------- FIM MOSTRA TESTE *-----------------------*/
      pane.add("Home", painel);  
      pane.add("Tipos", tiposImoveis);  
+     pane.add("Pendentes", propostasPendentes);
      
         
         /*------- MENU -------------*/
@@ -241,6 +274,12 @@ public class Home extends JFrame implements ActionListener, WindowListener{
         proposta_pend.setPreferredSize(new java.awt.Dimension(larg/4, alt/4));
         proposta_pend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/money.png")));
         menu.add(proposta_pend);
+        
+        JMenuItem listaProposta = new JMenuItem("Lista Proposta", new ImageIcon(getClass().getResource("/image/money.png")));
+        listaProposta.setPreferredSize(new java.awt.Dimension(larg/(5), 20));
+        listaProposta.setBorder(null);
+        
+        proposta_pend.add(listaProposta);
         /*Fim Menu de Propostas Pendentes*/
         
         /*Menu Editar dados cadastrados */
@@ -276,6 +315,17 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                 Relatorio3 rel3 = new Relatorio3();
                 rel3.setVisible(true);
                 rel3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            }
+        });
+        
+        JMenuItem relatorio6 = new JMenuItem("Relatório 6", new ImageIcon(getClass().getResource("/image/user_gray.png")));
+        relatorio6.setBorder(null);
+        relatorios.add(relatorio6);
+        relatorio6.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                Relatorio6 rel6 = new Relatorio6();
+                rel6.setVisible(true);
+                rel6.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             }
         });
         
@@ -366,6 +416,13 @@ public class Home extends JFrame implements ActionListener, WindowListener{
             @Override
             public void actionPerformed(ActionEvent e) {
               layout.show(pane,"Tipos");
+            }
+        });
+        
+        listaProposta.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+              layout.show(pane,"Pendentes");
             }
         });
       
@@ -609,6 +666,7 @@ public class Home extends JFrame implements ActionListener, WindowListener{
                     }
                     det.setVisible(true);
                     det.setSize(740, 300);
+                    det.setResizable(false);
                     det.setLocationRelativeTo(null);
                     det.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 }
